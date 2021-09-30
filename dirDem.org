@@ -14,6 +14,9 @@ https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpg
 https://addons.mozilla.org/en-US/firefox/addon/ether-metamask/
 *** explorer
 https://etherscan.io/
+*** faucets
+https://faucet.dimensions.network/
+https://ethdrop.dev/
 ** registration
 to dirĐem
 *** TODO qr
@@ -153,11 +156,15 @@ brownie bake vyper-token
 *** tutorials
 https://github.com/curvefi/brownie-tutorial
 https://www.youtube.com/playlist?list=PLVOHzVzbg7bFUaOGwN0NOgkTItUAVyBBQ
-**** example
+description below each video
+**** deFi-content is secondary
+https://curve.readthedocs.io/
+**** examples                                                       :brownie:
 in the dir where ~brownie bake token~ has installed files
 #+begin_src shell :results drawer
   brownie console
 #+end_src
+***** interact
 #+begin_src python :results drawer output
   >>> my_token = Token.deploy("TestToken", "TST", 18, 1e21, {'from': accounts[0]})
   >>> t = my_token
@@ -184,11 +191,26 @@ in the dir where ~brownie bake token~ has installed files
   
   >>> run('<SCRIPTNAME>')
 #+end_src
-**** brownie-token-tester
-#+begin_src shell :results drawer
-  export WEB3_INFURA_PROJECT_ID=<your_infura_key>
+***** load contract from external network
+https://curve.readthedocs.io/ref-addresses.html
+#+begin_src python :results drawer output
+  >>> web3.eth.blockNumber
+  >>> pool = Contract.from_explorer('<CONTRACT-ADDRESS>')
+  >>> pool.info()
 #+end_src
-
+***** store an an session-persistent reference to an contract
+on mainnet-fork
+#+begin_src python :results drawer output
+   >>> ap = Contract('<ADDRESS>')
+   >>> ap.get_registry()
+   >>> ap.set_alias('address_provider')
+   >>> quit()
+  
+  ### launch again 
+   
+   >>> ap = Contract('address_provider')
+   >>> ap.get_registry()
+#+end_src
 *** templates
 https://github.com/brownie-mix
 *** TODO gui
@@ -252,8 +274,12 @@ https://kovan.etherscan.io/address/0x81ed0a39089ed92432e654ef8e2fd8d4cd3f2a27#co
   brownie run  --network kovan scripts/price_feed_scripts/02_read_price_feed.py
 #+end_src
 ** flaskVyper
+*** INFO
 https://blog.itconsense.com/eth-contract-python-vyper-flask.html
 https://github.com/tomgross/basic_user_contract/
+**** based on 
+https://medium.com/coinmonks/how-to-develop-ethereum-contract-using-python-flask-9758fe65976e
+https://github.com/NehaGhogale/basic_user_contract
 *** use brownie mix as template
 **** config
 https://eth-brownie.readthedocs.io/en/stable/config.html
@@ -276,19 +302,156 @@ https://eth-brownie.readthedocs.io/en/stable/network-management.html#adding-a-ne
 ******* chainid
 https://chainlist.org/
 *** create brownieAccount
-
-** vyper
+or use scripts from *chainlink-mix*
+*** use secure env via ~summon~
+**** alt: sops: can be handled in project-source
+**** create wrapper
+#+begin_src shell :results drawer
+function summonBrownie() {
+    ENV=${1}
+    BROWNIE_ARGS=${@:2}
+    summon --up -e ${ENV} bash -c 'brownie '${BROWNIE_ARGS}' --network ${BROWNIE_NETWORK}'
+}
+#+end_src
+**** create aliases
+#+begin_src shell :results drawer
+alias     b="summonBrownie dev"
+alias    bS="summonBrownie stage"
+alias bPROD="summonBrownie prod"
+#+end_src
+**** set env for account via =secret.yaml=
+#+begin_src yaml
+###
+##
+# * set ENV for summon
+#
+---
+dev:
+# ENV                     ENTRY IN GOPASS
+  ETHERSCAN_TOKEN:        !var misc/brownie etherscan_apikey
+  PRIVATE_KEY:            !var misc/metamask privateKey
+  WEB3_INFURA_PROJECT_ID: !var misc/brownie infura_project_id-test
+  BROWNIE_NETWORK:        development
+stage:
+  ETHERSCAN_TOKEN:        !var misc/brownie etherscan_apikey
+  PRIVATE_KEY:            !var misc/metamask privateKey
+  WEB3_INFURA_PROJECT_ID: !var misc/brownie infura_project_id-test
+  BROWNIE_NETWORK:        kovan
+prod:
+  ETHERSCAN_TOKEN:        !var misc/brownie etherscan_apikey
+  PRIVATE_KEY:            !var misc/metamask privateKey
+  WEB3_INFURA_PROJECT_ID: !var misc/brownie infura_project_id-test
+  BROWNIE_NETWORK:        kovan
+#+end_src
+**** fill passwordmanager with envs
+*** FAILING install ganacheGui
+https://www.youtube.com/watch?v=nO3rSKO9OQA
+#+begin_src shell :results drawer
+  git clone https://github.com/trufflesuite/ganache.git
+  cd ganache
+  npm install
+  npm start
+  
+  
+  git clone https://github.com/trufflesuite/ganache-ui
+#+end_src
+*** deploy SC                                                       :brownie:
+#+begin_src shell :results drawer
+>>> run('user/01_user.py')
+#+end_src
+#+begin_src python :results drawer output
+>>> User.deploy({'from': accounts[0]})
+#+end_src
+**** reset chain
+#+begin_src python
+>>> chain.reset()
+#+end_src
+**** get gas for methods of contract
+#+begin_src python :results drawer output
+CONTRACT_CONTAINER.abi()
+#+end_src
+**** get info about contract
+only on external nets
+#+begin_src python :results drawer output
+ >>> Contract.from_explorer("0x...")
+#+end_src 
+**** info
+https://docs.soliditylang.org/en/latest/natspec-format.html
+needs a console restart??
+**** TODO [#A] learn usage
+https://docs.soliditylang.org/en/latest/natspec-format.html
+*** vyper
 https://vyper.readthedocs.io/en/v0.2.11/vyper-by-example.html
-*** fundus
-**** voting
+**** fundus
+***** voting
 https://vyper.readthedocs.io/en/v0.2.11/vyper-by-example.html
-**** end start of ballot examples
+***** end start of ballot examples
 https://vyper.readthedocs.io/en/v0.2.11/vyper-by-example.html
-** what can be realized
+*** web3.py
+https://web3py.readthedocs.io/en/stable/
+https://web3py.readthedocs.io/en/stable/quickstart.html
+https://github.com/ethereum/web3.py/blob/master/docs/web3.eth.account.rst#sign-a-contract-transaction
+**** brownie uses web3.py internally
+**** Remember, to interact with any smart contract, you need two things:
+- The contract ABI
+- The contract address
+*** RUN
+**** start chain
+in =../PROTO/5flaskVyper/backend/user/=
+#+begin_src shell :results drawer
+  b console
+#+end_src
+**** deploy contract 
+#+begin_src python :results drawer output
+>>>  accounts[0].balance()
+>>> user.deploy({'from': accounts[0]})
+>>>  accounts[0].balance()
+#+end_src
+if ~gas_price: 1~ in =brownie-config.yaml=
+***** get address
+#+begin_src python :results drawer output
+>>> user
+#+end_src
+***** update
+#+begin_example python
+CONTRACT_ADDRESS = "0x02500eE183Da01E01db093bF016FD8486b45Fd6c"
+#+end_example
+**** run flask
+in =../PROTO/5flaskVyper/= 
+#+begin_src shell :results drawer
+  flask run
+#+end_src
+**** interact
+#+begin_src shell :results drawer
+curl -H "Content-Type: application/json" --request POST -d '{"name":"Jane Doe","gender":"male"}' http://localhost:5000/blockchain/user   ~
+  
+curl http://localhost:5000/user
+#+end_src
+**** inspect from console
+#+begin_src python :results drawer output
+>>>  accounts[1].balance()
+>>>  user[0].getUser()
+>>>  accounts[1].balance()
+#+end_src
+** flaskTailwindHtmx
+https://github.com/testdrivenio/flask-htmx-tailwind
+https://testdriven.io/blog/flask-htmx-tailwind/
+*** ??
+https://dev.to/ffpaiki/flask-tailwindcss-flask-assets-51mo
+*** run
+#+begin_src shell :results drawer
+  flask run
+#+end_src
+**** navigate to 
+http://127.0.0.1:5000/
+**** search for
+*fac*
+*a*
+** TODO what can be realized
 *** delimitations
-** proto frontend
+** TODO proto frontend
 *** flask
-** contract
+** TODO contract
 show on  etherscan
 e.g.: https://etherscan.io/address/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48#code
 *** mint test token on testnet ???
@@ -401,7 +564,15 @@ https://chain.link/
 * AKTUELLES
 * 〇
 ** 1  UNSORTIERTES
-
+*** TODO deployment
+**** Running Flask on Kubernetes | TestDriven.io
+https://testdriven.io/blog/running-flask-on-kubernetes/
+***** testdrivenio/flask-vue-kubernetes: Flask + Vue + Postgres + Docker + Kubernetes
+https://github.com/testdrivenio/flask-vue-kubernetes
+**** testdriven / flask-tdd-docker · GitLab
+https://gitlab.com/testdriven/flask-tdd-docker
+***** mjhea0/flaskr-tdd: Flaskr: Intro to Flask, Test-Driven Development (TDD), and JavaScript
+https://github.com/mjhea0/flaskr-tdd
 *** votingRights
 https://docs.openzeppelin.com/contracts/2.x/tokens#different-kinds-of-tokens
 *** programming
@@ -501,6 +672,7 @@ https://pub.dev/packages/web3dart
 **** python
 https://ethereum.org/en/developers/docs/programming-languages/python/
 https://ethereum.org/en/learn/
+https://ethereum.org/de/python/
 ***** framework
 https://github.com/eth-brownie/brownie
 ***** vyper
@@ -527,6 +699,8 @@ https://ethereum.org/en/developers/docs/smart-contracts/languages/
 ***** solidity
 https://docs.soliditylang.org/en/v0.8.2/installing-solidity.html
 https://docs.soliditylang.org/en/develop/introduction-to-smart-contracts.html#
+****** utils
+https://github.com/ethereum/dapp-bin/tree/master/library/
 ****** memory
 https://docs.soliditylang.org/en/develop/introduction-to-smart-contracts.html#storage-memory-and-the-stack
 ***** vyper                                                          :python:
@@ -633,7 +807,53 @@ https://iamdefinitelyahuman.medium.com/
 automated market maker
 DeFi
 https://curve.fi/
-** sphinx
+*** ethereum
+**** langs
+https://ethereum.org/en/developers/docs/programming-languages/
+!!!OLD LINKS - 2018!!!
+***** dart
+https://ethereum.org/en/developers/docs/programming-languages/dart/
+***** go
+https://ethereum.org/en/developers/docs/programming-languages/golang/
+***** python
+https://ethereum.org/en/developers/docs/programming-languages/python/
+https://kauri.io/#collections/Getting%20Started/an-introduction-to-smart-contracts-with-vyper/
+****** How to develop Ethereum contract using Python Flask?
+https://medium.com/coinmonks/how-to-develop-ethereum-contract-using-python-flask-9758fe65976e
+****** vyper
+https://kauri.io/#collections/Getting%20Started/an-introduction-to-smart-contracts-with-vyper/
+****** Intro to Web3.py · Ethereum For Python Developers | Dapp University
+https://www.dappuniversity.com/articles/web3-py-intro
+****** blockchain - How to call a Smart Contract function using Python and web3.py - Stack Overflow
+https://stackoverflow.com/questions/57580702/how-to-call-a-smart-contract-function-using-python-and-web3-py
+****** DApp Development for Python Programmers | by Salman Dabbakuti | Level Up Coding
+https://levelup.gitconnected.com/dapps-development-for-python-developers-f52b32b54f28
+****** Creating a Python Ethereum Interface: Part 1 | Hacker Noon
+https://hackernoon.com/creating-a-python-ethereum-interface-part-1-4d2e47ea0f4d
+****** Ethereum Smart Contracts in Python: a comprehensive(ish) guide | Hacker Noon
+https://hackernoon.com/ethereum-smart-contracts-in-python-a-comprehensive-ish-guide-771b03990988
+****** Compiling, deploying and calling Ethereum smartcontract using Python
+https://yohanes.gultom.id/2018/11/28/compiling-deploying-and-calling-ethereum-smartcontract-using-python/
+****** [#A] ethereum/eth-utils: Utility functions for working with ethereum related codebases.
+https://github.com/ethereum/eth-utils/
+https://eth-utils.readthedocs.io/en/stable/
+****** ethereum/web3.py: A python interface for interacting with the Ethereum blockchain and ecosystem.
+https://github.com/ethereum/web3.py
+****** Vyper tools and resources · vyperlang/vyper Wiki
+https://github.com/vyperlang/vyper/wiki/Vyper-tools-and-resources
+****** irrelevant at the moment
+******* Analyze Solidity Smart Contracts with Slither - kauri.io
+https://kauri.io/#collections/DevOps/analyze-solidity-smart-contracts-with-slither/#analyze-solidity-smart-contracts-with-slither
+******* TODO ethereum/py-wasm: A python implementation of the web assembly interpreter
+https://github.com/ethereum/py-wasm
+******* DEPRECATED mamba
+https://mamba.black/
+******* DEPRECATED py-eth.com
+http://py-eth.com/
+******* DEPRECATED Everything you need to know about the Trinity Ethereum client | by Piper Merriam | Medium
+https://medium.com/@pipermerriam/everything-you-need-to-know-about-the-trinity-ethereum-client-b093c756d1de
+https://github.com/ethereum/trinity
+*** sphinx
 build documentation
 #+begin_src shell :results drawer
 sphinx-build -b singlehtml  . ./BUILD
@@ -703,7 +923,7 @@ https://github.com/oneclickdapp/oneclickdapp-v1
 https://github.com/abunsen/etherflow
 **** smartContract
 ***** solidity
-****** voting
+****** TODO voting
 https://docs.soliditylang.org/en/latest/solidity-by-example.html#voting
 ****** license
 https://spdx.org/licenses/
@@ -713,8 +933,10 @@ https://spdx.org/licenses/
 ****** DONE emacs
 https://github.com/ralexstokes/vyper-mode
 ***** vyper
-https://vyper.readthedocs.io/en/stable/vyper-by-example.html#voting
+
 https://vyper.readthedocs.io/
+****** TODO [#A] voting
+https://vyper.readthedocs.io/en/stable/vyper-by-example.html#voting
 *** templates
 https://livebook.manning.com/book/building-ethereum-dapps/chapter-12/1
 https://livebook.manning.com/book/building-ethereum-dapps/appendix-d/1
@@ -736,12 +958,26 @@ apply automatically
 ** 3  FRAGEN
 *** Is a ERC20-token just a smart contract?
 ** 4  RECHERCHE
+*** deFi
+**** crypto-pools-paper.pdf
+https://curve.fi/files/crypto-pools-paper.pdf
+**** What Is Curve Finance in DeFi? | Binance Academy
+https://academy.binance.com/en/articles/what-is-curve-finance-in-defi
+**** What Is an Automated Market Maker (AMM)? | Binance Academy
+https://academy.binance.com/en/articles/what-is-an-automated-market-maker-amm
+**** A Guide to PancakeSwap | Binance Academy
+https://academy.binance.com/en/articles/a-guide-to-pancakeswap
+**** What is Million and the MM Token? - Ivan on Tech Academy
+https://academy.ivanontech.com/blog/what-is-million-and-the-mm-token
+**** DeFi/NFT projects, like Uniswap, AAVE
 ** 5  BIBLIO~
 *** channels
 **** Austin Griffin - from eth-dev-docs
 https://www.youtube.com/channel/UC_HI2i2peo1A-STdG22GFsA/videos
 *** sites
 https://decrypt.co/
+*** offTopic
+https://www.amazon.com/Age-Living-Machines-Technology-Revolution/dp/0393634744?asin=0393634744&revisionId=&format=4&depth=1
 ** 6  I
 *** VISION
 **** ALTS
@@ -823,6 +1059,18 @@ apply
 https://github.com/NixOS/nixpkgs/blob/nixos-21.05/pkgs/development/compilers/vyper/default.nix#L49
 as overlay
 cf. https://github.com/nix-community/poetry2nix/blob/master/overrides.nix
+*** TODO [#A] testing
+**** TODO Hypothesis
+https://hypothesis.works/articles/what-is-hypothesis/
+***** property-based testing
+https://eth-brownie.readthedocs.io/en/stable/tests-hypothesis-property.html
+*** DeFi
+**** difference strategy
+***** testing??
+***** defi??
+**** yearn
+https://github.com/yearn/brownie-strategy-mix
+https://docs.yearn.finance/yearn-finance/yvaults/vaults-and-strategies
 *** ranger
 **** highlight sol files
 ** 7a Anschaffungen
