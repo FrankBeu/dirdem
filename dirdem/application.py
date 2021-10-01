@@ -60,7 +60,8 @@ def index_ballots():
 
 @app.route("/ballots/create")
 def create_ballot():
-    pass
+    # pass
+    # print(app.config)
     title = "Abstimmung anlegen"
     return render_template("ballot/create.html",
                            apptitle = APP_TITLE,
