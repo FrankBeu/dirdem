@@ -24,12 +24,19 @@ assets.register("js", js) # new
 css.build()
 js.build() # new
 
+APP_TITLE = "dirĐem"
 
 ### ROUTES
 @app.route("/")
 def homepage():
     print(app.config['DB_URI'])
-    return render_template("index.html")
+    return render_template("homepage/index.html", apptitle = APP_TITLE)
+
+@app.route("/ballots")
+def get_all_ballots():
+    print('from-all-ballots')
+    title = "tet"
+    return render_template("ballot/index.html", title = title)
 
 
 @app.route("/search", methods=["POST"])
