@@ -41,8 +41,8 @@ pkgs.mkShell {
 
   FLASK_APP   = "dirdem";
 
-  FLASK_ENV   = "fake";
-  # FLASK_ENV   = "development";
+  # FLASK_ENV   = "fake";
+  FLASK_ENV   = "development";
   # FLASK_ENV   = "staging";
   # FLASK_ENV   = "development";
   # FLASK_ENV   = "production";

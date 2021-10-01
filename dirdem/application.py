@@ -5,6 +5,7 @@ from flask_assets import Bundle, Environment
 
 from dirdem.config.dummy import todos
 from dirdem.config.conf import load_setting
+from dirdem.dummy.dummy import load_data
 # from dirdem.config import *
 # import dirdem.config.conf as conf
 # import dirdem.config
@@ -13,6 +14,9 @@ import os
 
 ### CONFIGURATION
 app.config.update(load_setting())
+
+### dummy data for development
+dummy = load_data()
 
 ### ASSETS
 assets = Environment(app)
@@ -24,22 +28,35 @@ assets.register("js", js) # new
 css.build()
 js.build() # new
 
+
 APP_TITLE = "dirĐem"
+
+def is_dummy() -> bool:
+    if (app.config['ENV'] == 'fake') or (app.config['ENV'] == 'dev'):
+    ### TODO only dev has hotreload
+    # if (app.config['ENV'] == 'fake'):
+        ### otherwise hot reload is useless
+        global dummy
+        dummy = load_data()
+        return True
+
+    return False
+
 
 ### ROUTES
 @app.route("/")
 def homepage():
-    print(app.config['DB_URI'])
     return render_template("homepage/index.html", apptitle = APP_TITLE)
+
 
 @app.route("/ballots")
 def index_ballots():
-    print('from-all-ballots')
     title = "Abstimmungen"
     return render_template("ballot/index.html",
                            apptitle = APP_TITLE,
                            title = title,
                            )
+
 
 @app.route("/ballots/create")
 def create_ballot():
@@ -50,6 +67,7 @@ def create_ballot():
                            title = title,
                            )
 
+
 @app.route("/ballots", methods=["POST"])
 def store_ballot():
     pass
@@ -59,8 +77,9 @@ def store_ballot():
 def show_ballot(id):
     # pass
     print(app.config)
-    if app.config['ENV'] == 'fake':
-        ballotTitle = 'fake'
+    if is_dummy():
+        # ballotTitle = 'dummy'
+        ballotTitle = dummy['ballot']['show']['id']
     else:
         ballotTitle = id
 
