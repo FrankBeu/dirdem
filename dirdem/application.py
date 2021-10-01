@@ -11,6 +11,7 @@ from dirdem.dummy.dummy import load_data
 # import dirdem.config
 
 import os
+import random
 
 ### CONFIGURATION
 app.config.update(load_setting())
@@ -21,20 +22,20 @@ dummy = load_data()
 ### ASSETS
 assets = Environment(app)
 css = Bundle("src/main.css", output="dist/main.css", filters="postcss")
-js = Bundle("src/*.js", output="dist/main.js") # new
+js = Bundle("src/*.js", output="dist/main.js")
 
 assets.register("css", css)
-assets.register("js", js) # new
+assets.register("js", js)
 css.build()
-js.build() # new
+js.build()
 
 
 APP_TITLE = "dirĐem"
 
 def is_dummy() -> bool:
     if (app.config['ENV'] == 'fake') or (app.config['ENV'] == 'dev'):
-    ### TODO only dev has hotreload
-    # if (app.config['ENV'] == 'fake'):
+        ### TODO only dev has hotreload
+        # if (app.config['ENV'] == 'fake'):
         ### otherwise hot reload is useless
         global dummy
         dummy = load_data()
@@ -51,21 +52,20 @@ def homepage():
 
 @app.route("/ballots")
 def index_ballots():
-    title = "Abstimmungen"
     return render_template("ballot/index.html",
                            apptitle = APP_TITLE,
-                           title = title,
+                           titlePrefix = "Abstimmungen"
                            )
 
 
 @app.route("/ballots/create")
 def create_ballot():
-    # pass
-    # print(app.config)
-    title = "Abstimmung anlegen"
-    return render_template("ballot/create.html",
+    return render_template("ballot/showAndCreate.html",
                            apptitle = APP_TITLE,
-                           title = title,
+                           titlePrefix = "Abstimmung anlegen",
+			   title           = "",
+                           data = {},
+                           editable        = True,
                            )
 
 
@@ -76,18 +76,36 @@ def store_ballot():
 
 @app.route("/ballots/<id>")
 def show_ballot(id):
-    # pass
     print(app.config)
+    ### TODO: link / address
     if is_dummy():
-        # ballotTitle = 'dummy'
-        ballotTitle = dummy['ballot']['show']['id']
-    else:
-        ballotTitle = id
 
-    title = "Abstimmung " + ballotTitle
-    return render_template("ballot/create.html",
-                           apptitle = APP_TITLE,
-                           title = title,
+        r = random.randint(0, 1)
+
+        ### TODO: set ethernet only if production
+        app.config['ethernet'] = "kovan"
+        net_prefix = app.config['ethernet'] + "."
+        etherscan_url_prefix = "https://" + net_prefix + "etherscan.io/address/"
+
+        ballot = {}
+        ballot['id']              = dummy['ballot']['ballots'][r]['id']
+        ballot['address']         = dummy['ballot']['ballots'][r]['address']
+        ballot['address-link']    = etherscan_url_prefix + dummy['ballot']['ballots'][r]['address']
+        ballot['title']           = dummy['ballot']['ballots'][r]['title']
+        ballot['question']        = dummy['ballot']['ballots'][r]['question']
+        ballot['dateTimeClosing'] = dummy['ballot']['ballots'][r]['dateTimeClosing']
+        ballot['resultPositive']  = dummy['ballot']['ballots'][r]['resultPositive']
+        ballot['resultNegative']  = dummy['ballot']['ballots'][r]['resultNegative']
+        ballot['closed']          = dummy['ballot']['ballots'][r]['closed']
+    else:
+        ballot = {}
+        ballot['title'] = id
+
+    return render_template("ballot/showAndCreate.html",
+                           data        = ballot,
+                           apptitle    = APP_TITLE,
+                           titlePrefix = "Abstimmung",
+			   title       = ballot['title'],
                            )
 
 # @app.route("/ballots/<id>/edit")
@@ -96,14 +114,11 @@ def show_ballot(id):
 
 # @app.route("/ballots/<id>", methods=["PATCH"])
 # def update_ballot():
-    # pass
+# pass
 
 # @app.route("/ballots/<id>", methods=["DELETE"])
 # def destroy_ballot():
 #     pass
-
-
-
 
 
 @app.route("/search", methods=["POST"])

@@ -386,7 +386,7 @@ https://vyper.readthedocs.io/en/v0.2.11/vyper-by-example.html
 ***** voting
 https://vyper.readthedocs.io/en/v0.2.11/vyper-by-example.html
 ***** end start of ballot examples
-https://vyper.readthedocs.io/en/v0.2.11/vyper-by-example.html
+https://vyper.readthedocs.io/en/v0.2.11/vyper-by-example.html#voting
 *** web3.py
 https://web3py.readthedocs.io/en/stable/
 https://web3py.readthedocs.io/en/stable/quickstart.html
