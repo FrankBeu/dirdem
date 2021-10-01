@@ -103,3 +103,10 @@ searches the project-root to find the executable and tests
 ***** invalidate projectRoot (projectileCache)
 ~projectile-invalidate-cache~
 =SPC p i=
+*** npm
+**** add to =package.json= without installing
+#+begin_src shell :results drawer
+npm install --package-lock-only --no-package-lock @tailwindcss/custom-forms --save-dev
+#+end_src
+
+

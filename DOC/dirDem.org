@@ -447,10 +447,14 @@ http://127.0.0.1:5000/
 **** search for
 *fac*
 *a*
-** TODO what can be realized
+** what can be realized
 *** delimitations
-** TODO proto frontend
+*** MVP
+** proto frontend
 *** flask
+*** Tailwind
+https://tailwindcss-custom-forms.netlify.app/
+*** dump htmx
 ** TODO contract
 show on  etherscan
 e.g.: https://etherscan.io/address/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48#code

@@ -83,7 +83,7 @@ def store_ballot():
 
 @app.route("/ballots/<id>")
 def show_ballot(id):
-    print(app.config)
+    # print(app.config)
     ### TODO: link / address
     if is_dummy():
 
@@ -104,7 +104,7 @@ def show_ballot(id):
         ballot['resultPositive']  = dummy['ballot']['ballots'][r]['resultPositive']
         ballot['resultNegative']  = dummy['ballot']['ballots'][r]['resultNegative']
         ballot['closed']          = dummy['ballot']['ballots'][r]['closed']
-        print(ballot['addressLink'])
+        # print(ballot['addressLink'])
     else:
         ballot = {}
         ballot['title'] = id
@@ -127,6 +127,29 @@ def show_ballot(id):
 # @app.route("/ballots/<id>", methods=["DELETE"])
 # def destroy_ballot():
 #     pass
+
+
+@app.route("/votes/<id>/create/")
+def create_vote(id):
+    ### TODO
+    # if ballot['closed']:
+    #     return redirect(url_for('index_ballots'))
+
+    return render_template("votes/create.html",
+                           apptitle = APP_TITLE,
+                           titlePrefix = "Abstimmen",
+			   title           = "qwerqwerqwer",
+                           data = {},
+                           editable        = True,
+                           )
+
+
+@app.route("/votes", methods=["POST"])
+def store_vote():
+    print(request.get_data())
+    data = request.get_data()
+    id = 124
+    return redirect(url_for('show_ballot', id=id, data=data))
 
 
 @app.route("/search", methods=["POST"])
