@@ -1,22 +1,7 @@
-<!-- templates/index.html -->
-
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="w-small w-2/3 mx-auto py-10 text-gray-600">
-  <h1>{{ title }}</h1>
-  <input
-    type="text"
-    name="search"
-    hx-post="/search"
-    hx-trigger="keyup changed delay:250ms"
-    hx-indicator=".htmx-indicator"
-    hx-target="#todo-results"
-    placeholder="Search"
-    class="bg-white h-10 px-5 pr-10 rounded-full text-2xl focus:outline-none"
-  >
-  <span class="htmx-indicator">Searching...</span>
-</div>
+{% include 'title.html' %}
 
 <table class="border-collapse w-small w-2/3 mx-auto">
   <thead>
