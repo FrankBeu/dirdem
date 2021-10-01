@@ -1,7 +1,7 @@
 * flask-htmx-tailwind
 ** INFO
 *** SOURCES
-**** based on
+**** flask is based on
 https://github.com/testdrivenio/flask-htmx-tailwind
 ** SETUP
 add files needed for flask
@@ -10,6 +10,13 @@ add node-packages from package.lock
 nixify
 node2nix -l
 #+end_src
+** environment
+*** in order to change the env
+edit =shell.nix=
+stop flask
+reload =shell.nix=
+*** change on =settings.json=
+needs a flask-restart
 ** TODO TODOS
 *** =default.nix= needs python implementation
 ** DEVEL

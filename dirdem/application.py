@@ -33,10 +33,57 @@ def homepage():
     return render_template("homepage/index.html", apptitle = APP_TITLE)
 
 @app.route("/ballots")
-def get_all_ballots():
+def index_ballots():
     print('from-all-ballots')
-    title = "tet"
-    return render_template("ballot/index.html", title = title)
+    title = "Abstimmungen"
+    return render_template("ballot/index.html",
+                           apptitle = APP_TITLE,
+                           title = title,
+                           )
+
+@app.route("/ballots/create")
+def create_ballot():
+    pass
+    title = "Abstimmung anlegen"
+    return render_template("ballot/create.html",
+                           apptitle = APP_TITLE,
+                           title = title,
+                           )
+
+@app.route("/ballots", methods=["POST"])
+def store_ballot():
+    pass
+
+
+@app.route("/ballots/<id>")
+def show_ballot(id):
+    # pass
+    print(app.config)
+    if app.config['ENV'] == 'fake':
+        ballotTitle = 'fake'
+    else:
+        ballotTitle = id
+
+    title = "Abstimmung " + ballotTitle
+    return render_template("ballot/create.html",
+                           apptitle = APP_TITLE,
+                           title = title,
+                           )
+
+# @app.route("/ballots/<id>/edit")
+# def edit_ballot():
+#     pass
+
+# @app.route("/ballots/<id>", methods=["PATCH"])
+# def update_ballot():
+    # pass
+
+# @app.route("/ballots/<id>", methods=["DELETE"])
+# def destroy_ballot():
+#     pass
+
+
+
 
 
 @app.route("/search", methods=["POST"])
