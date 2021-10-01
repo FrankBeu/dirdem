@@ -4,8 +4,15 @@ from flask import Flask, render_template, request
 from flask_assets import Bundle, Environment
 
 from dirdem.config.dummy import todos
-import dirdem.config as conf
+from dirdem.config.conf import load_setting
+# from dirdem.config import *
+# import dirdem.config.conf as conf
+# import dirdem.config
 
+import os
+
+### CONFIGURATION
+app.config.update(load_setting())
 
 ### ASSETS
 assets = Environment(app)
@@ -21,6 +28,7 @@ js.build() # new
 ### ROUTES
 @app.route("/")
 def homepage():
+    print(app.config['DB_URI'])
     return render_template("index.html")
 
 

@@ -1,0 +1,21 @@
+{
+  "production": {
+    "DEBUG": false,
+    "APPLICATION_ROOT": "/app-root",
+    "DB_URI": "mongodb://20.0.0.2:27017/TEST_DB",
+    "FTP_HOST": "20.0.0.10"
+
+  },
+  "staging": {
+    "DEBUG": false,
+    "APPLICATION_ROOT": "/app-root",
+    "DB_URI": "mongodb://localhost:27017/TEST_DB",
+    "FTP_HOST": "20.0.0.19"
+  },
+  "development": {
+    "DEBUG": true,
+    "APPLICATION_ROOT": "/app-root",
+    "DB_URI": "mongodb://localhost:27017/TEST_DB",
+    "FTP_HOST": "20.0.0.11"
+  }
+}
