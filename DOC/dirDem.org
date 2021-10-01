@@ -858,6 +858,15 @@ build documentation
 #+begin_src shell :results drawer
 sphinx-build -b singlehtml  . ./BUILD
 #+end_src
+*** TODO pushNotifications
+**** How to setup basic web push notification functionality using a Flask backend | by Surya Sankar | Medium
+https://suryasankar.medium.com/how-to-setup-basic-web-push-notification-functionality-using-a-flask-backend-1251a5413bbe
+**** Web Push Book
+https://web-push-book.gauntface.com/
+**** Adding Push Notifications to a Web App  |  Web Fundamentals
+https://developers.google.com/web/fundamentals/codelabs/push-notifications/
+**** Web Push Notifications: Timely, Relevant, and Precise
+https://developers.google.com/web/fundamentals/push-notifications
 ** 2  IDEEN
 *** Tools/Tech
 **** DONE scrum
