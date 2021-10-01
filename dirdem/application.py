@@ -1,6 +1,6 @@
 from dirdem import app
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_assets import Bundle, Environment
 
 from dirdem.config.dummy import todos
@@ -71,7 +71,14 @@ def create_ballot():
 
 @app.route("/ballots", methods=["POST"])
 def store_ballot():
-    pass
+    # return redirect("/ballots/123", code=200)
+# title
+# question
+# dateTimeClosing
+    print(request.get_data())
+    data = request.get_data()
+    id = 124
+    return redirect(url_for('show_ballot', id=id, data=data))
 
 
 @app.route("/ballots/<id>")
@@ -90,13 +97,14 @@ def show_ballot(id):
         ballot = {}
         ballot['id']              = dummy['ballot']['ballots'][r]['id']
         ballot['address']         = dummy['ballot']['ballots'][r]['address']
-        ballot['address-link']    = etherscan_url_prefix + dummy['ballot']['ballots'][r]['address']
+        ballot['addressLink']    = etherscan_url_prefix + dummy['ballot']['ballots'][r]['address']
         ballot['title']           = dummy['ballot']['ballots'][r]['title']
         ballot['question']        = dummy['ballot']['ballots'][r]['question']
         ballot['dateTimeClosing'] = dummy['ballot']['ballots'][r]['dateTimeClosing']
         ballot['resultPositive']  = dummy['ballot']['ballots'][r]['resultPositive']
         ballot['resultNegative']  = dummy['ballot']['ballots'][r]['resultNegative']
         ballot['closed']          = dummy['ballot']['ballots'][r]['closed']
+        print(ballot['addressLink'])
     else:
         ballot = {}
         ballot['title'] = id

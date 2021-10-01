@@ -7,193 +7,215 @@
 	    w-10/12
 	    lg:w-2/3
 	    ">
-  <form hx-post="/ballots/create" hx-target="#table-and-form">
+    <form action="/ballots" method="post">
 
 
-    <div class="grid
-		grid-cols-2
-		xl:gap-x-12
-		">
-
-
-      {% if editable %}
-      <div class="bg-blue mb-10 grid
-		  col-span-full
-		  lg:grid-cols-6
-		  xl:col-span-1
+      <div class="grid
+		  grid-cols-2
+		  xl:gap-x-12
 		  ">
-	<label class="text-3xl
-		      ml-3 mb-2
-		      col-span-full
-		      lg:col-span-2 lg:mt-2 lg:ml-0 lg:mb-0
-		      ">
-	  Titel:
-	</label>
-	<input name="title"
-	       type="text"
-	       placeholder="{{data.title}}"
-	       class="bg-white h-14 px-5 pr-10 rounded-full text-2xl focus:outline-none
-		      col-span-full
-		      lg:col-span-4"
-	       >
+
+
+	{% if editable %}
+	<div class="bg-blue mb-10 grid
+		    col-span-full
+		    lg:grid-cols-6
+		    xl:col-span-1
+		    ">
+	  <label class="text-3xl
+			ml-3 mb-2
+			col-span-full
+			lg:col-span-2 lg:mt-2 lg:ml-0 lg:mb-0
+			">
+	    Titel:
+	  </label>
+	  <input name="title"
+		 type="text"
+		 placeholder="{{data.title}}"
+		 class="bg-white h-14 px-5 pr-10 rounded-full text-2xl focus:outline-none
+			col-span-full
+			lg:col-span-4"
+		 >
+	</div>
+	{% endif %}
+
+
+	<div class="bg-blue mb-10 grid
+		    col-span-full
+		    lg:grid-cols-6
+		    xl:col-span-2
+		    ">
+	  <label class="text-3xl
+			ml-3 mb-2
+			col-span-full
+			lg:col-span-2 lg:mt-2 lg:ml-0 lg:mb-0
+			xl:col-span-1
+			">
+	    Frage:
+	  </label>
+	  <input name="question"
+		 type="text"
+		 {% if not editable %} readonly {% endif %}
+		 placeholder="{{data.question}}"
+		 class="bg-white h-14 px-5 pr-10 rounded-full text-2xl focus:outline-none
+			col-span-full
+			lg:col-span-4
+			xl:col-span-5 xl:-ml-2
+			">
+	</div>
+
+
+	{% if not editable %}
+	<div class="bg-blue mb-10 grid
+		    col-span-full
+		    lg:grid-cols-6
+		    xl:col-span-1
+		    ">
+	  <label class="text-3xl
+			ml-3 mb-2
+			col-span-full
+			lg:col-span-2 lg:mt-2 lg:ml-0 lg:mb-0
+			">
+	    SmartContract:
+	  </label>
+	  <a href="{{data.addressLink}}"
+	     class=" bg-white h-14 rounded-full text-2xl focus:outline-none hover:bg-blue-300
+		    col-span-full
+		    lg:col-span-4
+		    ">
+	    <input name="address"
+		   type="text"
+		   {% if not editable %} readonly {% endif %}
+		   placeholder="{{data.address}}"
+		   class="bg-white h-14 px-5 pr-10 w-full rounded-full text-2xl focus:outline-none bg-opacity-0 focus:placeholder-red-500
+			  ">
+	  </a>
+	</div>
+	<div class="bg-blue mb-10 grid
+		    col-span-full
+		    lg:grid-cols-6
+		    xl:col-span-1
+		    ">
+	</div>
+	{% endif %}
+
+
+	<div class="bg-blue mb-10 grid
+		    col-span-full
+		    lg:grid-cols-6
+		    xl:col-span-1
+		    ">
+	  <label class="text-3xl
+			ml-3 mb-2
+			col-span-full
+			lg:col-span-2 lg:mt-2 lg:ml-0 lg:mb-0
+			">
+	    Ende:
+	  </label>
+	  <input name="dateTimeClosing"
+		 type="text"
+		 {% if not editable %} readonly {% endif %}
+		 placeholder="{{data.dateTimeClosing}}"
+		 class="bg-white h-14 px-5 pr-10 rounded-full text-2xl focus:outline-none
+			col-span-full
+			lg:col-span-4
+			">
+	</div>
+
+
+	{% if not editable %}
+	<div class="bg-blue mb-10 grid
+		    col-span-full
+		    xl:col-span-1
+		    grid-cols-6
+		    ">
+	  <label class="text-3xl
+			ml-3 mb-2
+			col-span-full
+			lg:col-span-2 lg:mt-2 lg:ml-0 lg:mb-0
+			">
+	    Status:
+	  </label>
+	  {% if data.closed %} <div class="rounded bg-red-400 py-3 px-4 text-2xl font-bold text-center align-middle
+					   col-span-2
+					   col-start-3
+					   lg:ml-4
+					   ">beendet</div>
+	  {% else %}           <div class="rounded bg-green-400 py-3 px-4 text-2xl font-bold text-center align-center
+					   col-span-2
+					   col-start-3
+					   lg:ml-4
+					   ">aktuell</div> {% endif %}
+	</div>
+	{% endif %}
+
+	{% if not editable %}
+	<div class="col-span-full">
+	  <h2 class=" font-bold text-4xl text-gray-600 my-4">
+	    <p class="inline-block">Ergebnis:</p>
+	  </h2>
+	</div>
+
+	<div class="bg-blue mb-10 grid
+		    col-span-full
+		    lg:grid-cols-6
+		    xl:col-span-1
+		    ">
+	  <label class="text-3xl
+			ml-3 mb-2
+			col-span-full
+			lg:col-span-2 lg:mt-2 lg:ml-0 lg:mb-0
+			">
+	    Positive:
+	  </label>
+	  <input name="resultPositive"
+		 type="text"
+		 {% if not editable %} readonly {% endif %}
+		 placeholder="{{data.resultPositive}}"
+		 class="bg-white h-14 px-5 pr-10 rounded-full text-2xl focus:outline-none
+			col-span-full
+			lg:col-span-4
+			">
+	</div>
+
+	<div class="bg-blue mb-10 grid
+		    col-span-full
+		    lg:grid-cols-6
+		    xl:col-span-1
+		    ">
+	  <label class="text-3xl
+			ml-3 mb-2
+			col-span-full
+			lg:col-span-2 lg:mt-2 lg:ml-0 lg:mb-0
+			">
+	    Negative:
+	  </label>
+	  <input name="resultNegative"
+		 type="text"
+		 {% if not editable %} readonly {% endif %}
+		 placeholder="{{data.resultNegative}}"
+		 class="bg-white h-14 px-5 pr-10 rounded-full text-2xl focus:outline-none
+			col-span-full
+			lg:col-span-4
+			">
+	</div>
+	{% endif %}
+
+	<div class="col-span-full grid grid-cols-12">
+	  {% if editable %} <button type="submit"
+				    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded
+					   col-span-2 col-start-10 mt-20
+					   lg:col-span-1 lg:col-start-12
+					   xl:mt-40
+					   ">Create</button>
+	  {% else %}      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded
+					 col-span-2 col-start-10 mt-20
+					 lg:col-span-1 lg:col-start-12
+					 xl:mt-40
+					 "> <a href="/ballots">Overview</a> </button>
+	  {% endif %}
+	</div>
       </div>
-      {% endif %}
-
-
-      <div class="bg-blue mb-10 grid
-		  col-span-full
-		  lg:grid-cols-6
-		  xl:col-span-2
-		  ">
-	<label class="text-3xl
-                      ml-3 mb-2
-		      col-span-full
-		      lg:col-span-2 lg:mt-2 lg:ml-0 lg:mb-0
-		      xl:col-span-1
-		      ">
-	  Frage:
-	</label>
-	<input name="question"
-	       type="text"
-	       {% if not editable %} readonly {% endif %}
-	       placeholder="{{data.question}}"
-	       class="bg-white h-14 px-5 pr-10 rounded-full text-2xl focus:outline-none
-		      col-span-full
-		      lg:col-span-4
-		      xl:col-span-5 xl:-ml-2
-		      ">
-      </div>
-
-
-      {% if not editable %}
-      <div class="bg-blue mb-10 grid
-		  col-span-full
-		  lg:grid-cols-6
-		  xl:col-span-2
-		  ">
-	<label class="text-3xl
-                      ml-3 mb-2
-		      col-span-full
-		      lg:col-span-2 lg:mt-2 lg:ml-0 lg:mb-0
-		      xl:col-span-1
-		      ">
-	  SmartContract:
-	</label>
-	<input name="address"
-	       type="text"
-	       {% if not editable %} readonly {% endif %}
-	       placeholder="{{data.address}}"
-	       class="bg-white h-14 px-5 pr-10 rounded-full text-2xl focus:outline-none
-		      col-span-full
-		      lg:col-span-4
-		      xl:col-span-5 xl:-ml-2
-		      ">
-      </div>
-      {% endif %}
-
-
-      <div class="bg-blue mb-10 grid
-		  col-span-full
-		  lg:grid-cols-6
-		  xl:col-span-1
-		  ">
-	<label class="text-3xl
-		      ml-3 mb-2
-		      col-span-full
-		      lg:col-span-2 lg:mt-2 lg:ml-0 lg:mb-0
-		      ">
-	  Ende:
-	</label>
-	<input name="dateTimeClosing"
-	       type="text"
-	       {% if not editable %} readonly {% endif %}
-	       placeholder="{{data.dateTimeClosing}}"
-	       class="bg-white h-14 px-5 pr-10 rounded-full text-2xl focus:outline-none
-		      col-span-full
-		      lg:col-span-4"
-	       >
-      </div>
-
-
-      {% if not editable %}
-      <div class="bg-blue mb-10 grid
-		  col-span-full
-		  xl:col-span-1
-		  grid-cols-6
-		  ">
-	<label class="text-3xl
-		      ml-3 mb-2
-		      col-span-full
-		      lg:col-span-2 lg:mt-2 lg:ml-0 lg:mb-0
-		      ">
-	  Status:
-	</label>
-	{% if data.closed %} <div class="rounded bg-red-400 py-3 px-4 text-2xl font-bold text-center align-middle
-					 col-span-2
-					 col-start-3
-					 lg:ml-4
-					 ">beendet</div>
-	{% else %}           <div class="rounded bg-green-400 py-3 px-4 text-2xl font-bold text-center align-center
-					 col-span-2
-					 col-start-3
-					 lg:ml-4
-					 ">aktuell</div> {% endif %}
-      </div>
-      {% endif %}
-
-      {% if not editable %}
-      <div class="col-span-full">
-	<h2 class=" font-bold text-4xl text-gray-600 my-4">
-	  <p class="inline-block">Ergebnis:</p>
-	</h2>
-      </div>
-
-      <div class="bg-blue mb-10 grid
-		  col-span-full
-		  lg:grid-cols-6
-		  xl:col-span-1
-		  ">
-	<label class="text-3xl
-		      ml-3 mb-2
-		      col-span-full
-		      lg:col-span-2 lg:mt-2 lg:ml-0 lg:mb-0
-		      ">
-	  Positive:
-	</label>
-	<input name="resultPositive"
-	       type="text"
-	       {% if not editable %} readonly {% endif %}
-	       placeholder="{{data.resultPositive}}"
-	       class="bg-white h-14 px-5 pr-10 rounded-full text-2xl focus:outline-none
-		      col-span-full
-		      lg:col-span-4"
-	       >
-      </div>
-
-      <div class="bg-blue mb-10 grid
-		  col-span-full
-		  lg:grid-cols-6
-		  xl:col-span-1
-		  ">
-	<label class="text-3xl
-		      ml-3 mb-2
-		      col-span-full
-		      lg:col-span-2 lg:mt-2 lg:ml-0 lg:mb-0
-		      ">
-	  Negative:
-	</label>
-	<input name="resultNegative"
-	       type="text"
-	       {% if not editable %} readonly {% endif %}
-	       placeholder="{{data.resultNegative}}"
-	       class="bg-white h-14 px-5 pr-10 rounded-full text-2xl focus:outline-none
-		      col-span-full
-		      lg:col-span-4"
-	       >
-      </div>
-      {% endif %}
-
-    </div>
-  </form>
+    </form>
 </div>
 {% endblock content %}
