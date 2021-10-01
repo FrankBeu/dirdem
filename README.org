@@ -10,6 +10,24 @@ add node-packages from package.lock
 nixify
 node2nix -l
 #+end_src
+** get ip
+#+begin_src shell :results drawer
+dig TXT +short o-o.myaddr.l.google.com @ns1.google.com
+#+end_src
+** serve via ipv6
+*** run flask
+#+begin_src shell :results drawer
+  flask run --host='::' --port=8080
+#+end_src
+*** curl
+#+begin_src shell :results drawer
+curl -g -6 'http://[2a02:8070:279d:2700:4754:be88:8d7:61ac]:8080'
+#+end_src
+*** router
+| Quell IPv6 | Ziel IPv6 | Protokoll | Quellport | Zielport | Erlauben | Aktivier | Löschen |
+|            |           |           |           |          |          |          |         |
+| All        | All       | TCP       | 1 : 65535 |     8080 |        1 |        1 |       0 |
+** only ~devel~ has hot reload
 ** environment
 *** in order to change the env
 edit =shell.nix=
