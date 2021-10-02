@@ -1,4 +1,5 @@
-{ pkgs ? import <nixpkgs> { } }:
+{ pkgs ? import <nixpkgs> {}}:
+
 let
   nodeEnv = import ./default.nix {};
 
@@ -7,12 +8,108 @@ let
     python     = pkgs.python39;
     poetrylock = ./poetry.lock;
     overrides = pkgs.poetry2nix.overrides.withDefaults (self: super: {
+
       werkzeug = super.werkzeug.overrideAttrs (oldAttrs: rec {
         postPatch = ''
           substituteInPlace src/werkzeug/_reloader.py \
           --replace "rv = [sys.executable]" "return sys.argv"
         '';
         doCheck = false;
+      });
+
+
+      black = super.black.overridePythonAttrs (old: {
+        dontPreferSetupPy = true;
+      });
+
+      didyoumean = super.didyoumean.overridePythonAttrs (old: {
+        preBuild = ''
+          export HOME=$(mktemp -d)
+        '';
+      });
+
+      eth-brownie = super.eth-brownie.overridePythonAttrs (old: {
+        propagatedBuildInputs = (old.propagatedBuildInputs or [ ]) ++ [
+          self.tkinter
+        ];
+      });
+
+      flit-core = super.flit-core.overridePythonAttrs (old: {
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ self.pytest-runner ];
+        buildInputs = (old.buildInputs or [ ]) ++ [ self.setuptools-scm-git-archive ];
+        preBuild = ''
+          export HOME=$(mktemp -d)
+        '';
+      });
+
+      ipfshttpclient = super.ipfshttpclient.overridePythonAttrs (old: {
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ self.pytest-runner ];
+      });
+
+      lazy-object-proxy = super.lazy-object-proxy.overridePythonAttrs (old: {
+        dontPreferSetupPy = true;
+      });
+
+      mythx-models = super.mythx-models.overridePythonAttrs (old: {
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ self.pytest-runner ];
+        preBuild = ''
+          export HOME=$(mktemp -d)
+        '';
+      });
+
+      platformdirs = super.platformdirs.overridePythonAttrs (old: {
+        postPatch = ''
+          substituteInPlace setup.py --replace 'setup()' 'setup(version="${old.version}")'
+        '';
+      });
+
+      pycryptodome = super.pycryptodome.overridePythonAttrs (old: {
+        preBuild = ''
+          export HOME=$(mktemp -d)
+        '';
+      });
+
+      pythx = super.pythx.overridePythonAttrs (old: {
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ self.pytest-runner ];
+      });
+
+      py-solc = super.py-solc.overridePythonAttrs (old: {
+        dontPreferSetupPy = true;
+        preBuild = ''
+          export HOME=$(mktemp -d)
+        '';
+      });
+
+      py-solc-x = super.py-solc-x.overridePythonAttrs (old: {
+        dontPreferSetupPy = true;
+        preBuild = ''
+          export HOME=$(mktemp -d)
+        '';
+      });
+
+      tomli = super.tomli.overridePythonAttrs (old: {
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+          self.flit-core
+          self.pytest-runner
+        ];
+        preBuild = ''
+          export HOME=$(mktemp -d)
+        '';
+      });
+
+      vvm = super.vvm.overridePythonAttrs (old: {
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ self.pytest-runner ];
+        preBuild = ''
+          export HOME=$(mktemp -d)
+        '';
+        dontPreferSetupPy = true;
+      });
+
+      vyper = super.vyper.overridePythonAttrs (old: {
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+          self.pytest-runner
+          pkgs.git
+        ];
       });
     });
   };
