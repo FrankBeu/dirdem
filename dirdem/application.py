@@ -17,7 +17,7 @@ import random
 app.config.update(load_setting())
 
 ### dummy data for development
-dummy = load_data()
+dummy = {}
 
 ### ASSETS
 assets = Environment(app)
@@ -43,6 +43,16 @@ def is_dummy() -> bool:
 
     return False
 
+# class Utility:
+
+def etherscan_url_prefix():
+    ### TODO: set ethernet only if production
+    app.config['ethernet'] = "kovan"
+    net_prefix = app.config['ethernet'] + "."
+    return "https://" + net_prefix + "etherscan.io/address/"
+
+
+# util = Utility()
 
 ### ROUTES
 @app.route("/")
@@ -52,9 +62,39 @@ def homepage():
 
 @app.route("/ballots")
 def index_ballots():
+    ballots = []
+    if is_dummy():
+
+        r = random.randint(0, 1)
+
+        url_prefix = etherscan_url_prefix()
+        dummies = dummy['ballot']['ballots']
+
+        for fake in dummies:
+            ballot = {}
+            ballot['id']              = fake['id']
+            ballot['address']         = fake['address']
+            ballot['addressLink']     = url_prefix + fake['address']
+            ballot['title']           = fake['title']
+            ballot['question']        = fake['question']
+            ballot['dateTimeClosing'] = fake['dateTimeClosing']
+            ballot['resultPositive']  = fake['resultPositive']
+            ballot['resultNegative']  = fake['resultNegative']
+            ballot['closed']          = fake['closed']
+
+            ballots.append(ballot)
+
+
+        # print(ballot['addressLink'])
+    else:
+        ballot = {}
+        ballot['title'] = id
+
+
     return render_template("ballot/index.html",
                            apptitle = APP_TITLE,
-                           titlePrefix = "Abstimmungen"
+                           titlePrefix = "Abstimmungen",
+                           ballots = ballots
                            )
 
 
@@ -89,15 +129,12 @@ def show_ballot(id):
 
         r = random.randint(0, 1)
 
-        ### TODO: set ethernet only if production
-        app.config['ethernet'] = "kovan"
-        net_prefix = app.config['ethernet'] + "."
-        etherscan_url_prefix = "https://" + net_prefix + "etherscan.io/address/"
+        url_prefix = etherscan_url_prefix()
 
         ballot = {}
         ballot['id']              = dummy['ballot']['ballots'][r]['id']
         ballot['address']         = dummy['ballot']['ballots'][r]['address']
-        ballot['addressLink']    = etherscan_url_prefix + dummy['ballot']['ballots'][r]['address']
+        ballot['addressLink']    = url_prefix + dummy['ballot']['ballots'][r]['address']
         ballot['title']           = dummy['ballot']['ballots'][r]['title']
         ballot['question']        = dummy['ballot']['ballots'][r]['question']
         ballot['dateTimeClosing'] = dummy['ballot']['ballots'][r]['dateTimeClosing']
@@ -165,6 +202,7 @@ def search_todo():
             res_todos.append(todo)
 
     return render_template("todo.html", todos=res_todos)
+
 
 
 

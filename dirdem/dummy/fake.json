@@ -2,7 +2,7 @@
 	"ballot": {
 		"ballots": [
 			{
-				"id": "fakeID1",
+				"id": "1234",
 				"address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
 				"title": "fakeTitle1",
 				"question": "fakeQuestion",
@@ -12,8 +12,8 @@
 				"closed": true
 			},
 			{
-				"id": "fakeID1",
-				"address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+				"id": "9876",
+				"address": "0x600001355471592bF79c9cddF1D0be2766784187",
 				"title": "fakeTitle1ReallyReallyReallyReallyReallyReallyLong",
 				"question": "fakeQuestionReallyReallyReallyReallyReallyReallyLong",
 				"dateTimeClosing": "2021-10-01 18:03:58+02:00",

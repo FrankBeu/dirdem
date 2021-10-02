@@ -6,13 +6,14 @@
 <table class="border-collapse w-small mx-auto w-2/3">
   <thead>
     <tr>
-      <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">#</th>
-      <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Title</th>
-      <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Completed</th>
+      <th class="p-3 font-bold bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Title</th>
+      <th class="p-3 font-bold bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">SmartContract</th>
+      <th class="p-3 font-bold bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Abgeschlossen</th>
+      <th class="p-3 font-bold bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Abstimmen</th>
     </tr>
   </thead>
-  <tbody id="todo-results">
-    {% include 'todo.html' %}
+  <tbody id="ballot-results">
+    {% include 'table.html' %}
   </tbody>
 </table>
 {% endblock content %}
