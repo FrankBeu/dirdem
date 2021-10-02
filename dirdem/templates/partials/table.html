@@ -1,0 +1,38 @@
+{% if ballots|length>0 %}
+{% for ballot in ballots %}
+<tr class="bg-white  flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static hover:text-blue-500"          ><a href="/ballots/{{ballot.title}}">{{ballot.title}}</a  ></td>
+    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static hover:text-blue-500 break-all"><a href="{{ballot.addressLink}}"   >{{ballot.address}}</a></td>
+    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+	{% if ballot.closed %} <span class="rounded bg-red-400   py-1 px-3 text-xs font-bold border-8 border-red-200"  >beendet</span>
+	{% else %}             <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold border-8 border-green-200">aktuell</span>
+	{% endif %}
+    </td>
+    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+	{% if ballot.closed %} <button class="bg-gray-400 opacity-40 text-white font-bold py-2 rounded cursor-default
+					      col-span-2 col-start-10 w-1/2
+					      lg:col-span-1 lg:col-start-12 lg:w-full
+					      xl:w-2/3
+					      ">Abstimmen</button>
+	{% else %}             <button class="bg-blue-500 text-white font-bold py-2 rounded hover:bg-blue-700
+					      col-span-2 col-start-10 w-1/2
+					      lg:col-span-1 lg:col-start-12 lg:w-full
+					      xl:w-2/3
+					      "><a href="/votes/{{ballot.id}}/create">Abstimmen</a></button>
+	{% endif %}
+    </td>
+</tr>
+{% endfor %}
+<tr class="bg-white  flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+    <td class="w-full lg:w-auto p-3 text-gray-800 text-center hidden lg:border lg:border-b block lg:table-cell relative lg:static hover:text-blue-500"></td>
+    <td class="w-full lg:w-auto p-3 text-gray-800 text-center hidden lg:border lg:border-b block lg:table-cell relative lg:static hover:text-blue-500"></td>
+    <td class="w-full lg:w-auto p-3 text-gray-800 text-center hidden lg:border lg:border-b block lg:table-cell relative lg:static                    "></td>
+    <td class="w-full lg:w-auto p-3 text-gray-800 text-center lg:border lg:border-b block lg:table-cell relative lg:static">
+	<button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded
+		       col-span-2 col-start-10 w-1/3
+		       lg:col-span-1 lg:col-start-12 lg:w-2/3
+		       xl:w-2/3
+		       "><a href="/ballots/create">Neu anlegen</a></button>
+    </td>
+</tr>
+{% endif %}

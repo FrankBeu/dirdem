@@ -455,6 +455,10 @@ http://127.0.0.1:5000/
 *** Tailwind
 https://tailwindcss-custom-forms.netlify.app/
 *** dump htmx
+not working and not neccessary
+*** dateTimePicker
+https://tailwind-elements.com/docs/standard/forms/datepicker/
+https://tailwind-elements.com/docs/standard/forms/timepicker/
 ** TODO contract
 show on  etherscan
 e.g.: https://etherscan.io/address/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48#code

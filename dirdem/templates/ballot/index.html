@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% include 'title.html' %}
+{% include 'partials/title.html' %}
 
 <table class="border-collapse w-small mx-auto w-2/3">
   <thead>
@@ -13,7 +13,7 @@
     </tr>
   </thead>
   <tbody id="ballot-results">
-    {% include 'table.html' %}
+    {% include 'partials/table.html' %}
   </tbody>
 </table>
 {% endblock content %}

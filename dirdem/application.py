@@ -100,12 +100,15 @@ def index_ballots():
 
 @app.route("/ballots/create")
 def create_ballot():
+
+    ballot_durations_in_minutes = [1, 2, 3, 5, 8, 13, 21,]
     return render_template("ballot/showAndCreate.html",
-                           apptitle = APP_TITLE,
-                           titlePrefix = "Abstimmung anlegen",
-			   title           = "",
-                           data = {},
-                           editable        = True,
+                           apptitle      = APP_TITLE,
+                           titlePrefix   = "Abstimmung anlegen",
+			   title         = "",
+                           data          = {},
+                           close_options = ballot_durations_in_minutes,
+                           editable      = True,
                            )
 
 
