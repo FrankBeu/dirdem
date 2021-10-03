@@ -502,6 +502,13 @@ run('ballotList/1')
 run('ballotList/deploy')
 #+end_src
 **** add ballot to ballotList
+BallotList is a ~address[100]~
+#+begin_src python :results drawer output
+  ### real address 20 bytes long (40 digits)
+  BallotList[0].add_ballot(0x6b4BDe1086912A6Cb24ce3dB43b3466e6c72AFd1)
+#+end_src
+***** DEPRECATED add ballot to ballotList
+BallotList was a ~byte32[100]~
 #+begin_src python :results drawer output
   ### bytes32 - 64 digits
   ### real address 20 bytes long (40 digits)
