@@ -2,8 +2,8 @@ from dirdem import app
 
 from flask import Flask, render_template, request, redirect, url_for, Response, request, jsonify
 from flask_assets import Bundle, Environment
-from dirdem.utils.smartcontract import w3
-from marshmallow import Schema, fields, ValidationError
+# from dirdem.utils.smartcontract import w3, deploy_ballot
+# from marshmallow import Schema, fields, ValidationError
 
 from dirdem.config.dummy import todos
 from dirdem.config.conf import load_setting
@@ -18,6 +18,7 @@ import json
 import logging
 import datetime
 import time
+import web3
 ### CONFIGURATION
 app.config.update(load_setting())
 
@@ -37,6 +38,14 @@ js.build()
 
 APP_TITLE = "dirĐem"
 
+# w3 = Web3(HTTPProvider("https://kovan.infura.io/v3/YOUR_PROJECT_ID"))
+# acct = w3.eth.account.privateKeyToAccount(privateKey)
+
+# w3 = web3.Web3(web3.Web3.HTTPProvider("http://127.0.0.1:8545"))
+w3 = web3.Web3(web3.Web3.HTTPProvider(app.config['WEB3_PROVIDER']))
+w3.eth.default_account = w3.eth.accounts[0]
+
+
 def is_dummy() -> bool:
     # if (app.config['ENV'] == 'fake') or (app.config['ENV'] == 'dev'):
     if (app.config['ENV'] == 'fake'):
@@ -52,13 +61,12 @@ def is_dummy() -> bool:
 
 def etherscan_url_prefix():
     ### TODO: set ethernet only if production
-    app.config['ethernet'] = "kovan"
-    net_prefix = app.config['ethernet'] + "."
+    app.config['ETHERNET'] = "kovan"
+    net_prefix = app.config['ETHERNET'] + "."
     return "https://" + net_prefix + "etherscan.io/address/"
 
 
 def get_ballot_address_list():
-    w3.eth.default_account = w3.eth.accounts[1]
     with open('./smartcontract/build/contracts/BallotList.json', 'r') as f:
         datastore = json.load(f)
     abi = datastore["abi"]
@@ -83,7 +91,6 @@ def get_ballot_address_list():
 
 
 def get_ballot_data(ballot_address_list):
-    w3.eth.defaultAccount = w3.eth.accounts[1]
     with open('./smartcontract/build/contracts/Ballot.json', 'r') as f:
         datastore = json.load(f)
     abi = datastore["abi"]
@@ -107,12 +114,12 @@ def get_ballot_data(ballot_address_list):
 
 
 def prepare_ballots_data(ballots_data_raw):
-    ballots_data = [] 
+    ballots_data = []
 
     for ballot_raw in ballots_data_raw:
         ballot = {}
 
-        ballot['address']         = ballot_raw[0]     
+        ballot['address']         = ballot_raw[0]
         ballot['addressLink']     = etherscan_url_prefix() + ballot_raw[0]
         ballot['title']           = ballot_raw[1]
         ballot['question']        = ballot_raw[2]
@@ -123,9 +130,29 @@ def prepare_ballots_data(ballots_data_raw):
         ballot['closed']          = True if datetime.datetime.now().timestamp() > ballot_raw[3] else False
 
         ballots_data.append(ballot)
-        print(ballot)
 
     return ballots_data
+
+
+def vote_on_ballot(address, vote, id):
+
+    print(address, vote, id)
+
+    with open('./smartcontract/build/contracts/Ballot.json', 'r') as f:
+        datastore = json.load(f)
+    abi = datastore["abi"]
+
+    contract_address = address
+
+    ### Create the contract instance
+    ballot = w3.eth.contract(
+        address=contract_address,
+        abi=abi,
+    )
+
+    tx_hash = ballot.functions.vote(id, vote).transact()
+    w3.eth.waitForTransactionReceipt(tx_hash)
+    # tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
 
 
 ### ROUTES
@@ -189,20 +216,22 @@ def store_ballot():
     # title
     # question
     # dateTimeClosing
-    print(request.get_data())
-    data = request.get_data()
-    id = 124
-    return redirect(url_for('show_ballot', id=id, data=data))
+    # print(request.get_data('title'))
+    ballot_id = create_ballot_smartcontract(request.form['title'], request.form['question'], request.form['dateTimeClosing'])
+    # print(request.form['title'])
+    # print(request.form['question'])
+    print(ballot_id)
+    # print(request.form['dateTimeClosing'])
+    # data = request.get_data()
+    # id = 124
+    return redirect(url_for('show_ballot', id=ballot_id))
 
 
 @app.route("/ballots/<id>")
 def show_ballot(id):
-    # print(app.config)
-    ### TODO: link / address
     if is_dummy():
 
         r = random.randint(0, 1)
-
         url_prefix = etherscan_url_prefix()
 
         ballot = {}
@@ -229,13 +258,16 @@ def show_ballot(id):
 			   title       = ballot['title'],
                            )
 
+
 # @app.route("/ballots/<id>/edit")
 # def edit_ballot():
 #     pass
 
+
 # @app.route("/ballots/<id>", methods=["PATCH"])
 # def update_ballot():
 # pass
+
 
 # @app.route("/ballots/<id>", methods=["DELETE"])
 # def destroy_ballot():
@@ -244,74 +276,31 @@ def show_ballot(id):
 
 @app.route("/votes/<id>/create/")
 def create_vote(id):
-    ### TODO
-    # if ballot['closed']:
-    #     return redirect(url_for('index_ballots'))
+    ballot = {}
+    ballots_data_raw = get_ballot_data([id])
+    ballots = prepare_ballots_data(ballots_data_raw)
+    ballot = ballots[0]
+
+    if ballot['closed']:
+        return redirect(url_for('index_ballots'))
 
     return render_template("votes/create.html",
-                           apptitle = APP_TITLE,
+                           apptitle    = APP_TITLE,
                            titlePrefix = "Abstimmen",
-			   title           = "qwerqwerqwer",
-                           data = {},
-                           editable        = True,
+			   title       = ballot['title'],
+                           data        = ballot,
+                           editable    = True,
                            )
 
 
 @app.route("/votes", methods=["POST"])
 def store_vote():
-    print(request.get_data())
-    data = request.get_data()
-    id = 124
-    return redirect(url_for('show_ballot', id=id, data=data))
+    ballot_address = request.form['address']
+    vote = True if request.form['result'] == 'true' else False
 
+    vote_on_ballot(ballot_address, vote, request.form['identification'])
 
-#############################################################################################################################
-# api to set new user every api call
-# @app.route("/blockchain/user", methods=["POST"])
-# def transaction():
-#     w3.eth.defaultAccount = w3.eth.accounts[1]
-#     # with open("data.json", "r") as f:
-#     with open('./smartcontract/ballot/build/contracts/Ballots.json', 'r') as f:
-#         datastore = json.load(f)
-#     abi = datastore["abi"]
-#     # contract_address = datastore["contract_address"]
-#     # contract_address = "0x02500eE183Da01E01db093bF016FD8486b45Fd6c"
-#     contract_address = app.config['BALLOT_LIST_ADDRESS']
-
-
-#     # Create the contract instance with the newly-deployed address
-#     ballots = w3.eth.contract(
-#         address=contract_address,
-#         abi=abi,
-#     )
-#     body = request.get_json()
-#     try:
-#         result = UserSchema().load(body)
-#     except ValidationError as err:
-#         return jsonify(err.messages), 422
-
-#     tx_hash = ballots.functions.setUser(result["name"], result["gender"])
-#     tx_hash = tx_hash.transact()
-#     # Wait for transaction to be mined...
-#     w3.eth.waitForTransactionReceipt(tx_hash)
-
-#     ballots_data = ballots.functions.getUser().call()
-#     return jsonify({"data": ballots_data}), 200
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return redirect(url_for('show_ballot', id=ballot_address))
 
 
 

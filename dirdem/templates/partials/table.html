@@ -18,11 +18,12 @@
 					      col-span-2 col-start-10 w-1/2
 					      lg:col-span-1 lg:col-start-12 lg:w-full
 					      xl:w-2/3
-					      "><a href="/votes/{{ballot.id}}/create">Abstimmen</a></button>
+					      "><a href="/votes/{{ballot.address}}/create">Abstimmen</a></button>
 	{% endif %}
     </td>
 </tr>
 {% endfor %}
+{% endif %}
 <tr class="bg-white  flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
     <td class="w-full lg:w-auto p-3 text-gray-800 text-center hidden lg:border lg:border-b block lg:table-cell relative lg:static hover:text-blue-500"></td>
     <td class="w-full lg:w-auto p-3 text-gray-800 text-center hidden lg:border lg:border-b block lg:table-cell relative lg:static hover:text-blue-500"></td>
@@ -35,4 +36,3 @@
 		       "><a href="/ballots/create">Neu anlegen</a></button>
     </td>
 </tr>
-{% endif %}
