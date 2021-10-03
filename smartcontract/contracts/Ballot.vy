@@ -69,5 +69,5 @@ def vote(id: String[30], vote: bool):
 
 @view
 @external
-def state() -> (String[50], String[100], uint256, uint256, int128, int128):
-    return self.title, self.question, self.deadline, self.timelimit, self.resultPositive, self.resultNegative
+def state() -> (address, String[50], String[100], uint256, uint256, int128, int128):
+    return self, self.title, self.question, self.deadline, self.timelimit, self.resultPositive, self.resultNegative

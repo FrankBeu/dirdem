@@ -1,7 +1,7 @@
 {% if ballots|length>0 %}
 {% for ballot in ballots %}
 <tr class="bg-white  flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static hover:text-blue-500"          ><a href="/ballots/{{ballot.title}}">{{ballot.title}}</a  ></td>
+    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static hover:text-blue-500"          ><a href="/ballots/{{ballot.address}}">{{ballot.title}}</a  ></td>
     <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static hover:text-blue-500 break-all"><a href="{{ballot.addressLink}}"   >{{ballot.address}}</a></td>
     <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
 	{% if ballot.closed %} <span class="rounded bg-red-400   py-1 px-3 text-xs font-bold border-8 border-red-200"  >beendet</span>
