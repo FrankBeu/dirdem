@@ -10,7 +10,7 @@ def deploy_ballot():
     account = get_account()
 
     ballot = Ballot.deploy(
-        'test', 'does it work',120,
+        'test', 'Does it work?', 120,
         {'from':account},
         publish_source=config["networks"][network.show_active()].get("verify", False),
     )

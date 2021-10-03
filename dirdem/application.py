@@ -218,7 +218,9 @@ def show_ballot(id):
         # print(ballot['addressLink'])
     else:
         ballot = {}
-        ballot['title'] = id
+        ballots_data_raw = get_ballot_data([id])
+        ballots = prepare_ballots_data(ballots_data_raw)
+        ballot = ballots[0]
 
     return render_template("ballot/showAndCreate.html",
                            data        = ballot,

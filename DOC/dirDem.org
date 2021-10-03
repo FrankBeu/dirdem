@@ -464,7 +464,7 @@ https://tailwind-elements.com/docs/standard/forms/timepicker/
 >>> On ~brownie-console~
 ***** deploy manually
 #+begin_src python :results drawer output
-ballot.deploy('test', 'does it work',120,{'from':accounts[0]})
+ballot.deploy('test', 'Does it work??', 120, {'from':accounts[0]})
 #+end_src
 ***** deploy with script
 OR

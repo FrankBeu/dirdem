@@ -1,1 +1,1 @@
-/home/frank/AKTUELLES/CIM/SMART/dirDem/smartcontract/ballot/scripts/ballot/deploy.py
+/home/frank/AKTUELLES/CIM/SMART/dirDem/smartcontract/scripts/ballot/deploy.py
