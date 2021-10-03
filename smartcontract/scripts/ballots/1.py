@@ -1,1 +1,0 @@
-/home/frank/AKTUELLES/CIM/SMART/dirDem/smartcontract/ballot/scripts/ballot/deploy.py

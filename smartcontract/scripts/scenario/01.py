@@ -1,0 +1,1 @@
+/home/frank/AKTUELLES/CIM/SMART/dirDem/smartcontract/scripts/scenario/deployBallotAndAddToBallotList.py

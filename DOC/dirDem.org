@@ -7,7 +7,6 @@
 #+subtitle: distributed decision making
 
 * Presentation
-
 ** install a wallet
 *** metamask
 https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn
@@ -490,7 +489,7 @@ Ballot[0].state()
 #+begin_src shell :results drawer
   date -d @1633258107
 #+end_src
-*** ballots
+*** ballotList
 **** deploy contract
 ***** deploy manually
 #+begin_src python :results drawer output
@@ -499,31 +498,43 @@ Ballots.deploy({'from':accounts[0]})
 ***** deploy with script
 OR
 #+begin_src python :results drawer output
-run('ballots/1')
-run('ballots/deploy')
+run('ballotList/1')
+run('ballotList/deploy')
 #+end_src
-**** add ballot to ballots
+**** add ballot to ballotList
 #+begin_src python :results drawer output
   ### bytes32 - 64 digits
   ### real address 20 bytes long (40 digits)
-  Ballots[0].add_ballot(0x6b4BDe1086912A6Cb24ce3dB43b3466e6c72AFd1)
+  BallotList[0].add_ballot(0x6b4BDe1086912A6Cb24ce3dB43b3466e6c72AFd1)
   ### same as before
-  Ballots[0].add_ballot(0x0000000000000000000000006b4BDe1086912A6Cb24ce3dB43b3466e6c72AFd1)
+  BallotList[0].add_ballot(0x0000000000000000000000006b4BDe1086912A6Cb24ce3dB43b3466e6c72AFd1)
 
-  Ballots[0].add_ballot(0x0000000000000000000000000000000000000000000000000000000000000001)
-  Ballots[0].add_ballot(0x0000000000000000000000000000000000000000000000000000000000000002)
-  Ballots[0].add_ballot(0x4444444444444444444444444444444444444444444444444444444444444444)
-  Ballots[0].add_ballot(0x0000000000000000000000000000000000000000000000000000000000000001)
+  BallotList[0].add_ballot(0x0000000000000000000000000000000000000000000000000000000000000001)
+  BallotList[0].add_ballot(0x0000000000000000000000000000000000000000000000000000000000000002)
+  BallotList[0].add_ballot(0x4444444444444444444444444444444444444444444444444444444444444444)
+  BallotList[0].add_ballot(0x0000000000000000000000000000000000000000000000000000000000000001)
   ### leading zeroes are stripped
-  Ballots[0].add_ballot(0x00000000000000000000000000000000000000000000000000000000000000001)
+  BallotList[0].add_ballot(0x00000000000000000000000000000000000000000000000000000000000000001)
 
-  Ballots[0].add_ballot(0x1000000000000000000000000000000000000000000000000000000000000001)
+  BallotList[0].add_ballot(0x1000000000000000000000000000000000000000000000000000000000000001)
   ### NOT WORKING         |
-  Ballots[0].add_ballot(0x10000000000000000000000000000000000000000000000000000000000000001)
+  BallotList[0].add_ballot(0x10000000000000000000000000000000000000000000000000000000000000001)
 #+end_src
-*** get ballots
+**** get ballots
 #+begin_src python :results drawer output
-Ballots[0].get_ballots()
+BallotList[0].get_ballots()
+#+end_src
+*** Scenarios
+**** build a devel/test World
+***** one Ballotlist multiple Ballots
+#+begin_src python :results drawer output
+  run('scenarios/00')
+  run('scenarios/01')
+  run('scenarios/01')
+  run('scenarios/01')
+  run('scenarios/01')
+  run('scenarios/01')
+  ### …
 #+end_src
 * Ethereum - Web3.0
 ** BuildingBlocks
