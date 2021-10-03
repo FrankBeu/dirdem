@@ -90,13 +90,13 @@ https://www.youtube.com/watch?v=majXo_-s464
 - mining
 - transaction
 **** 4 Choose a sc language
-- solidity 
+- solidity
   widespread
 - vyper
 - lll - performance
 - fe
 **** 5 learn a smart contract framework (optional)
-truffle 
+truffle
 **** 6 Learn how to create Đapp UIs
 ***** connectors FE - SC
 ****** ether.js
@@ -133,7 +133,7 @@ brownie networks list
 #+begin_src shell :results drawer
 brownie run scripts/SCRIPT --network kovan
 #+end_src
-**** run tests 
+**** run tests
 #+begin_src shell :results drawer
 brownie test
 #+end_src
@@ -177,18 +177,18 @@ in the dir where ~brownie bake token~ has installed files
   >>> t.transfer(accounts[1],1e10,{'from': accounts[0]})
   >>> t.balanceOf(accounts[0])
   >>> t.balanceOf(accounts[1])
-  
+
   ### most recent transaction
   >>> history[-1]
   >>> history[-1].info()
-  
+
   >>> transfer_tx = chain.get_transaction('0xHASH')
   >>> transfer_tx.info()
   >>> transfer_tx.call_trace()
   >>> transfer_tx.traceback()
   >>> transfer_tx.events
   >>> transfer_tx.logs
-  
+
   >>> run('<SCRIPTNAME>')
 #+end_src
 ***** load contract from external network
@@ -205,15 +205,15 @@ on mainnet-fork
    >>> ap.get_registry()
    >>> ap.set_alias('address_provider')
    >>> quit()
-  
-  ### launch again 
-   
+
+  ### launch again
+
    >>> ap = Contract('address_provider')
    >>> ap.get_registry()
 #+end_src
 *** templates
 https://github.com/brownie-mix
-*** TODO gui
+*** DONE gui
 not working: _tinker missing
 https://eth-brownie.readthedocs.io/en/stable/gui.html
 ** proto
@@ -257,7 +257,7 @@ needs
     # Change to True if you have an Etherscan API key and want to verify
     verify: True
  ######     ^^^^   ##############################################################
-  
+
     update_interval: 60
 #+end_src
 ***** configuration
@@ -277,7 +277,7 @@ https://kovan.etherscan.io/address/0x81ed0a39089ed92432e654ef8e2fd8d4cd3f2a27#co
 *** INFO
 https://blog.itconsense.com/eth-contract-python-vyper-flask.html
 https://github.com/tomgross/basic_user_contract/
-**** based on 
+**** based on
 https://medium.com/coinmonks/how-to-develop-ethereum-contract-using-python-flask-9758fe65976e
 https://github.com/NehaGhogale/basic_user_contract
 *** use brownie mix as template
@@ -298,7 +298,7 @@ https://eth-brownie.readthedocs.io/en/stable/network-management.html#adding-a-ne
   brownie networks add Ethereum ropstenquicknode host=YOUR_QUICKNODE_URL chainid=3
 #+end_example
                                        ENV          CUSTOM_NAME     | key:value...
-                                                       used in --network 
+                                                       used in --network
 ******* chainid
 https://chainlist.org/
 *** create brownieAccount
@@ -351,8 +351,8 @@ https://www.youtube.com/watch?v=nO3rSKO9OQA
   cd ganache
   npm install
   npm start
-  
-  
+
+
   git clone https://github.com/trufflesuite/ganache-ui
 #+end_src
 *** deploy SC                                                       :brownie:
@@ -374,7 +374,7 @@ CONTRACT_CONTAINER.abi()
 only on external nets
 #+begin_src python :results drawer output
  >>> Contract.from_explorer("0x...")
-#+end_src 
+#+end_src
 **** info
 https://docs.soliditylang.org/en/latest/natspec-format.html
 needs a console restart??
@@ -401,7 +401,7 @@ in =../PROTO/5flaskVyper/backend/user/=
 #+begin_src shell :results drawer
   b console
 #+end_src
-**** deploy contract 
+**** deploy contract
 #+begin_src python :results drawer output
 >>>  accounts[0].balance()
 >>> user.deploy({'from': accounts[0]})
@@ -417,14 +417,14 @@ if ~gas_price: 1~ in =brownie-config.yaml=
 CONTRACT_ADDRESS = "0x02500eE183Da01E01db093bF016FD8486b45Fd6c"
 #+end_example
 **** run flask
-in =../PROTO/5flaskVyper/= 
+in =../PROTO/5flaskVyper/=
 #+begin_src shell :results drawer
   flask run
 #+end_src
 **** interact
 #+begin_src shell :results drawer
 curl -H "Content-Type: application/json" --request POST -d '{"name":"Jane Doe","gender":"male"}' http://localhost:5000/blockchain/user   ~
-  
+
 curl http://localhost:5000/user
 #+end_src
 **** inspect from console
@@ -442,7 +442,7 @@ https://dev.to/ffpaiki/flask-tailwindcss-flask-assets-51mo
 #+begin_src shell :results drawer
   flask run
 #+end_src
-**** navigate to 
+**** navigate to
 http://127.0.0.1:5000/
 **** search for
 *fac*
@@ -460,15 +460,34 @@ not working and not neccessary
 https://tailwind-elements.com/docs/standard/forms/datepicker/
 https://tailwind-elements.com/docs/standard/forms/timepicker/
 ** TODO contract
-show on  etherscan
-e.g.: https://etherscan.io/address/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48#code
-*** mint test token on testnet ???
-all nets??
-https://www.youtube.com/watch?v=0JrDbvBClEA&list=PLVOHzVzbg7bFUaOGwN0NOgkTItUAVyBBQ&index=6
+*** deploy contract
+>>> On ~brownie-console~
+**** deploy manually
 #+begin_src python :results drawer output
-  dai_addr = "0x6B175474E89094C44Da98b954EedeAC495271d0F"
-  dai = MintableForkToken(dai_addr)
-  dai._mint_for_tetsing(accounts[0], amount)
+ballot.deploy('test', 'does it work',120,{'from':accounts[0]})
+#+end_src
+**** deploy with script
+OR
+#+begin_src python :results drawer output
+run('ballot/1')
+run('ballot/deploy')
+#+end_src
+*** vote
+#+begin_src python :results drawer output
+  Ballot[0].vote('ICH',True)
+  Ballot[0].vote('DU',False)
+  Ballot[0].vote('DU',True)
+  ### wait till ballot is over
+  Ballot[0].vote('SIE',False)
+  Ballot[0].vote('ER',True)
+#+end_src
+*** results
+#+begin_src python :results drawer output
+Ballot[0].state()
+#+end_src
+*** readable timestamp
+#+begin_src shell :results drawer
+  date -d @1633258107
 #+end_src
 * Ethereum - Web3.0
 ** BuildingBlocks
@@ -519,7 +538,7 @@ https://explore.iteratec.com/blog/wie-funktioniert-eigentlich-die-blockchain-tei
 ***** long-term storage
   a key/value store.
   Unlike stack and memory,
-  which reset after computation ends, 
+  which reset after computation ends,
   storage persists for the long term.
 **** libraries
 https://openzeppelin.com/
@@ -555,7 +574,7 @@ https://docs.openzeppelin.com/contracts/2.x/tokens#different-kinds-of-tokens
 **** fungible assets:          how much
 *** ERC-20:         Fungible Tokens
 https://eips.ethereum.org/EIPS/eip-20
-****  totalSupply = tokensIActuallyWant * (10 ** decimals) 
+****  totalSupply = tokensIActuallyWant * (10 ** decimals)
 *** EIP-721: Non Fungible Tokens
 https://eips.ethereum.org/EIPS/eip-721
 ** oracles
@@ -620,7 +639,7 @@ browser-addon
 https://github.com/bitpay/wallet
 ***** state
 the record of all transactions as well as the EVM’s present state
-is stored in the blockchain, 
+is stored in the blockchain,
 which in turn is stored and agreed upon by all nodes.
 https://ethereum.org/en/developers/docs/intro-to-ethereum/
 ***** mist
@@ -712,7 +731,7 @@ https://github.com/ethereum/dapp-bin/tree/master/library/
 ****** memory
 https://docs.soliditylang.org/en/develop/introduction-to-smart-contracts.html#storage-memory-and-the-stack
 ***** vyper                                                          :python:
-Vyper does not strive to be a 100% replacement for everything that can be done in Solidity; 
+Vyper does not strive to be a 100% replacement for everything that can be done in Solidity;
 it will deliberately forbid things or make things harder if it deems fit to do so for the goal of increasing security.
 https://medium.com/block-journal/get-started-with-vyper-the-pythonic-ethereum-smart-contract-language-e5e58969087e
 https://kauri.io/#collections/Getting%20Started/an-introduction-to-smart-contracts-with-vyper/
@@ -875,6 +894,16 @@ https://web-push-book.gauntface.com/
 https://developers.google.com/web/fundamentals/codelabs/push-notifications/
 **** Web Push Notifications: Timely, Relevant, and Precise
 https://developers.google.com/web/fundamentals/push-notifications
+*** mint test token on testnet ???
+all nets??
+https://www.youtube.com/watch?v=0JrDbvBClEA&list=PLVOHzVzbg7bFUaOGwN0NOgkTItUAVyBBQ&index=6
+#+begin_src python :results drawer output
+  dai_addr = "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+  dai = MintableForkToken(dai_addr)
+  dai._mint_for_tetsing(accounts[0], amount)
+#+end_src
+*** show contract on etherscan
+e.g.: https://etherscan.io/address/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48#code
 ** 2  IDEEN
 *** Tools/Tech
 **** DONE scrum
@@ -883,7 +912,7 @@ https://developers.google.com/web/fundamentals/push-notifications
 **** flask
 **** etheriumTestNet
 https://docs.openzeppelin.com/learn/connecting-to-public-test-networks#testnet-list
-**** ballot 
+**** ballot
 remix -> contract -> ballot
 https://remix.ethereum.org/#optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.7+commit.e28d00a7.js
 **** remix
@@ -971,7 +1000,7 @@ apply automatically
 ***** local
 **** send ether programmatically
 **** change state of sc
-**** inter-sc-communication 
+**** inter-sc-communication
 ** 3  FRAGEN
 *** Is a ERC20-token just a smart contract?
 ** 4  RECHERCHE
@@ -1061,18 +1090,18 @@ https://toilethill.io/notes/ethereum
 *** TODO sc
 **** Design & BestPractices
 Um notwendige Fehlerbehebungen und Erweiterungen durchzuführen oder nicht mehr benötigte Smart Contracts unerreichbar zu machen,
-gibt es eine Reihe von Best Practices und Design Patterns. 
-Es ist empfehlenswert sich mit ihnen vertraut zu machen, 
+gibt es eine Reihe von Best Practices und Design Patterns.
+Es ist empfehlenswert sich mit ihnen vertraut zu machen,
 bevor man mit der Entwicklung von Smart Contracts beginnt.
 *** Đapp
-In einer vollständig dezentralen Umsetzung gemäß der Vision von Web 3.0 wäre auch das Frontend eines ĐApps dezentral gehosted. 
-Dafür bieten sich dezentrale Speicherdienste wie IPFS oder Swarm an. 
+In einer vollständig dezentralen Umsetzung gemäß der Vision von Web 3.0 wäre auch das Frontend eines ĐApps dezentral gehosted.
+Dafür bieten sich dezentrale Speicherdienste wie IPFS oder Swarm an.
 Letzteres gehört neben der Ethereum Virtual Machine (EVM) und Whisper zu den drei Grundbausteinen von Ethereum.
 *** TODO golang
 https://goethereumbook.org/en/accounts/
 *** TODO ganacheUI
 *** TODO try to install vyper with poetry
-apply 
+apply
 https://github.com/NixOS/nixpkgs/blob/nixos-21.05/pkgs/development/compilers/vyper/default.nix#L49
 as overlay
 cf. https://github.com/nix-community/poetry2nix/blob/master/overrides.nix

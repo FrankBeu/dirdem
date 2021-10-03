@@ -1,4 +1,4 @@
-* flask-htmx-tailwind
+* dirĐem
 ** INFO
 *** SOURCES
 **** flask is based on

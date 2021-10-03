@@ -137,7 +137,7 @@ def show_ballot(id):
         ballot = {}
         ballot['id']              = dummy['ballot']['ballots'][r]['id']
         ballot['address']         = dummy['ballot']['ballots'][r]['address']
-        ballot['addressLink']    = url_prefix + dummy['ballot']['ballots'][r]['address']
+        ballot['addressLink']     = url_prefix + dummy['ballot']['ballots'][r]['address']
         ballot['title']           = dummy['ballot']['ballots'][r]['title']
         ballot['question']        = dummy['ballot']['ballots'][r]['question']
         ballot['dateTimeClosing'] = dummy['ballot']['ballots'][r]['dateTimeClosing']
