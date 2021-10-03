@@ -459,14 +459,15 @@ not working and not neccessary
 *** dateTimePicker
 https://tailwind-elements.com/docs/standard/forms/datepicker/
 https://tailwind-elements.com/docs/standard/forms/timepicker/
-** TODO contract
-*** deploy contract
+** contract
+*** ballot
+**** deploy contract
 >>> On ~brownie-console~
-**** deploy manually
+***** deploy manually
 #+begin_src python :results drawer output
 ballot.deploy('test', 'does it work',120,{'from':accounts[0]})
 #+end_src
-**** deploy with script
+***** deploy with script
 OR
 #+begin_src python :results drawer output
 run('ballot/1')
@@ -488,6 +489,41 @@ Ballot[0].state()
 *** readable timestamp
 #+begin_src shell :results drawer
   date -d @1633258107
+#+end_src
+*** ballots
+**** deploy contract
+***** deploy manually
+#+begin_src python :results drawer output
+Ballots.deploy({'from':accounts[0]})
+#+end_src
+***** deploy with script
+OR
+#+begin_src python :results drawer output
+run('ballots/1')
+run('ballots/deploy')
+#+end_src
+**** add ballot to ballots
+#+begin_src python :results drawer output
+  ### bytes32 - 64 digits
+  ### real address 20 bytes long (40 digits)
+  Ballots[0].add_ballot(0x6b4BDe1086912A6Cb24ce3dB43b3466e6c72AFd1)
+  ### same as before
+  Ballots[0].add_ballot(0x0000000000000000000000006b4BDe1086912A6Cb24ce3dB43b3466e6c72AFd1)
+
+  Ballots[0].add_ballot(0x0000000000000000000000000000000000000000000000000000000000000001)
+  Ballots[0].add_ballot(0x0000000000000000000000000000000000000000000000000000000000000002)
+  Ballots[0].add_ballot(0x4444444444444444444444444444444444444444444444444444444444444444)
+  Ballots[0].add_ballot(0x0000000000000000000000000000000000000000000000000000000000000001)
+  ### leading zeroes are stripped
+  Ballots[0].add_ballot(0x00000000000000000000000000000000000000000000000000000000000000001)
+
+  Ballots[0].add_ballot(0x1000000000000000000000000000000000000000000000000000000000000001)
+  ### NOT WORKING         |
+  Ballots[0].add_ballot(0x10000000000000000000000000000000000000000000000000000000000000001)
+#+end_src
+*** get ballots
+#+begin_src python :results drawer output
+Ballots[0].get_ballots()
 #+end_src
 * Ethereum - Web3.0
 ** BuildingBlocks
