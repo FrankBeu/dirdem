@@ -141,7 +141,6 @@ pkgs.mkShell {
   # FLASK_ENV   = "fake";
   FLASK_ENV   = "development";
   # FLASK_ENV   = "staging";
-  # FLASK_ENV   = "development";
   # FLASK_ENV   = "production";
 
   # FLASK_DEBUG = "1";

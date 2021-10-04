@@ -1,26 +1,17 @@
 from dirdem import app
 
-from flask import Flask, render_template, request, redirect, url_for, request
+from flask import render_template, request, redirect, url_for, request
 from flask_assets import Bundle, Environment
 
 from dirdem.config.conf import load_setting
 from dirdem.dummy.dummy import load_data
-# from dirdem.config import *
-# import dirdem.config.conf as conf
-# import dirdem.config
 
 import os
 import random
 import json
-import logging
 import datetime
 import web3
 
-### CONFIGURATION
-app.config.update(load_setting())
-
-### dummy data for development
-dummy = {}
 
 ### ASSETS
 assets = Environment(app)
@@ -32,16 +23,27 @@ assets.register("js", js)
 css.build()
 js.build()
 
-
 APP_TITLE = "dirĐem"
 
-# w3 = Web3(HTTPProvider("https://kovan.infura.io/v3/YOUR_PROJECT_ID"))
-# acct = w3.eth.account.privateKeyToAccount(privateKey)
 
-# w3 = web3.Web3(web3.Web3.HTTPProvider("http://127.0.0.1:8545"))
-w3 = web3.Web3(web3.Web3.HTTPProvider(app.config['WEB3_PROVIDER']))
-w3.eth.default_account = w3.eth.accounts[0]
+### CONFIGURATION
+app.config.update(load_setting())
 
+web3_provider = app.config['WEB3_PROVIDER']
+if 'infura' in web3_provider:
+    web3_provider += os.getenv('WEB3_INFURA_PROJECT_ID')
+
+w3 = web3.Web3(web3.Web3.HTTPProvider(web3_provider))
+
+if '127.0.0.1' in web3_provider:
+    w3.eth.default_account = w3.eth.accounts[0]
+else:
+    private_key = os.getenv('PRIVATE_KEY')
+    w3.eth.default_account = w3.eth.account.from_key(private_key).address
+
+
+### dummy data for development
+dummy = {}
 
 def is_dummy() -> bool:
     # if (app.config['ENV'] == 'fake') or (app.config['ENV'] == 'dev'):
@@ -150,19 +152,19 @@ def deploy_ballot(title, question, timelimit):
         abi=contract_interface["abi"], bytecode=contract_interface["bytecode"]
     )
     ### Get transaction hash from deployed contract
-    tx_hash = Ballot.constructor(title, question, timelimit).transact()
-    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
-
-    # ballot = w3.eth.contract(
-    #     abi=contract_interface["abi"], address=tx_receipt['contractAddress']
-    #     )
-
-    address = tx_receipt["contractAddress"]
-    print(address)
-
-    return address
-
+    if '127.0.0.1' in web3_provider:
+        tx_hash    = Ballot.constructor(title, question, timelimit).transact()
+        tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+        address    = tx_receipt["contractAddress"]
+        return address
+    else:
+        tx         = Ballot.constructor(title, question, timelimit).buildTransaction({'nonce': w3.eth.getTransactionCount(w3.eth.default_account)})
+        tx_signed  = w3.eth.account.signTransaction(tx, private_key=private_key)
+        tx_hash    = w3.eth.sendRawTransaction(tx_signed.rawTransaction)
+        tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+        address    = tx_receipt["contractAddress"]
+        return address
 
 
 def add_ballot_to_ballotList(ballot_address):
@@ -178,8 +180,14 @@ def add_ballot_to_ballotList(ballot_address):
         abi=abi,
     )
 
-    tx_hash = ballotList.functions.add_ballot(ballot_address).transact()
-    w3.eth.wait_for_transaction_receipt(tx_hash)
+    if '127.0.0.1' in web3_provider:
+        tx_hash = ballotList.functions.add_ballot(ballot_address).transact()
+        w3.eth.wait_for_transaction_receipt(tx_hash)
+    else:
+        tx         = ballotList.functions.add_ballot(ballot_address).buildTransaction({'nonce': w3.eth.getTransactionCount(w3.eth.default_account)})
+        tx_signed  = w3.eth.account.signTransaction(tx, private_key=private_key)
+        tx_hash    = w3.eth.sendRawTransaction(tx_signed.rawTransaction)
+        w3.eth.wait_for_transaction_receipt(tx_hash)
 
 
 def vote_on_ballot(address, vote, id):
@@ -198,8 +206,14 @@ def vote_on_ballot(address, vote, id):
         abi=abi,
     )
 
-    tx_hash = ballot.functions.vote(id, vote).transact()
-    w3.eth.waitForTransactionReceipt(tx_hash)
+    if '127.0.0.1' in web3_provider:
+        tx_hash = ballot.functions.vote(id, vote).transact()
+        w3.eth.wait_for_transaction_receipt(tx_hash)
+    else:
+        tx         = ballot.functions.vote(id, vote).buildTransaction({'nonce': w3.eth.getTransactionCount(w3.eth.default_account)})
+        tx_signed  = w3.eth.account.signTransaction(tx, private_key=private_key)
+        tx_hash    = w3.eth.sendRawTransaction(tx_signed.rawTransaction)
+        w3.eth.wait_for_transaction_receipt(tx_hash)
 
 
 ### ROUTES
@@ -337,8 +351,6 @@ def store_vote():
     vote_on_ballot(ballot_address, vote, request.form['identification'])
 
     return redirect(url_for('show_ballot', id=ballot_address))
-
-
 
 
 if __name__ == "__main__":

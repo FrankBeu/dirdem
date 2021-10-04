@@ -543,15 +543,64 @@ BallotList[0].get_ballots()
   run('scenarios/01')
   ### …
 #+end_src
-*** TODO multienv
-**** idea
-#+begin_src python :results drawer output
-  if network.show_active() == 'mainnet-fork' or network.show_active() == 'development'
-      return ..... ,({'from': accounts[0]})
-  elif network.show_active() == 'kovan'
-      dev = accounts.add(os.getenv('PRIVATE_KEY'))
-      return ..... ,({'from': dev})
+*** multienv
+**** flask invocation
+#+begin_src shell :results drawer
+###
+##
+# ** flask
+#
+alias     f="summonFlask dev"
+alias    fS="summonFlask stage"
+alias fPROD="summonFlask prod"
 #+end_src
+#+begin_src shell :results drawer
+###
+##
+# *** flask: only used via ./aliases/python.zsh
+#
+function summonFlask() {
+    ENV=${1}
+    # FLASK_ARGS=${@:2}
+    summon --up -e ${ENV} bash -c 'flask run --host="::" --port=8080'
+}
+#+end_src
+*** deployment / Gas
+**** start: 0.0115 ETH
+**** deploy BallotList
+#+begin_src shell :results drawer
+  bPROD console
+#+end_src
+0.0003 ETH
+**** insert ~BallotList[0].address~ into  =env.toml=
+**** run flask
+#+begin_src shell :results drawer
+  fPROD
+#+end_src
+**** overview
+0.0001 ETH
+**** ballot
+0.0006 ETH
+**** PriceTag
+one List
+one Contract
+two Votes
+#+begin_example
+START 0.0115 ETH
+      0.0010 ETH
+END   0.0105 ETH
+#+end_example
+**** transactions
+***** on infura
+ValueError: {'code': -32601, 'message': 'The method eth_sendTransaction does not exist/is not available'}
+ https://stackoverflow.com/questions/55154713/error-the-method-eth-sendtransaction-does-not-exist-is-not-available#tab-top
+I'm guessing that you're connected directly to Infura, which doesn't support eth_sendTransaction. (For it to support that, it would need to know your private key, but it's a shared public node.)
+
+You need to either sign the transaction yourself and then send via eth_sendRawTransaction or use a provider that can hold private keys like MetaMask in the browser.
+****** Local vs Hosted Keys
+https://web3py.readthedocs.io/en/stable/web3.eth.account.html#local-vs-hosted-keys
+****** build transaction
+https://ethereum.stackexchange.com/questions/70240/how-to-send-transaction-with-web3-py
 * Ethereum - Web3.0
 ** BuildingBlocks
 *** Ethereum Virtual Machine (EVM)
@@ -1180,6 +1229,12 @@ https://eth-brownie.readthedocs.io/en/stable/tests-hypothesis-property.html
 **** yearn
 https://github.com/yearn/brownie-strategy-mix
 https://docs.yearn.finance/yearn-finance/yvaults/vaults-and-strategies
+*** cleanup
+#+begin_src python :results drawer output
+# from dirdem.config import *
+# import dirdem.config.conf as conf
+# import dirdem.config
+#+end_src
 *** ranger
 **** highlight sol files
 ** 7a Anschaffungen
