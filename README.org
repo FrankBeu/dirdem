@@ -32,6 +32,16 @@ all envs in =./secrets.yml=:dev  have to be set manually
   cd ./smartcontract/
   brownie console
 #+end_src
+**** deploy BallotList
+on brownie-console
+#+begin_src python :results drawer output
+run('scenario/00')
+#+end_src
+**** (optional) deploy ballot(s)
+on brownie-console
+#+begin_src python :results drawer output
+run('scenario/01')
+#+end_src
 **** start local flask
 ****** with summon
 #+begin_src shell :results drawer
@@ -73,7 +83,7 @@ add files needed for flask
 add node-packages from package.lock
 #+begin_src shell :results drawer
 nixify
-node2nix --development
+node2nix -l
 #+end_src
 ** get ip
 #+begin_src shell :results drawer
@@ -176,7 +186,14 @@ npm install --package-lock-only --no-package-lock @tailwindcss/custom-forms --sa
 *** node2nix
 **** dev-packages
 ***** by default only nonDevPackages will be made available
-***** make devPackages available, too
+#+begin_src shell :results drawer
+node2nix
+#+end_src
+****** use =package-lock.json=
+#+begin_src shell :results drawer
+node2nix -l
+#+end_src
+***** make only devPackages available
 #+begin_src shell :results drawer
 node2nix --development
 #+end_src

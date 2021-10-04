@@ -137,7 +137,6 @@ def create_ballot_smartcontract(title, question, dateTimeClosing):
     ballot_address = deploy_ballot(title, question, timelimit)
 
     add_ballot_to_ballotList(ballot_address)
-    print(ballot_address)
 
     return ballot_address
 
@@ -190,9 +189,6 @@ def add_ballot_to_ballotList(ballot_address):
 
 
 def vote_on_ballot(address, vote, id):
-
-    print(address, vote, id)
-
     with open('./smartcontract/build/contracts/Ballot.json', 'r') as f:
         datastore = json.load(f)
     abi = datastore["abi"]
@@ -218,7 +214,13 @@ def vote_on_ballot(address, vote, id):
 ### ROUTES
 @app.route("/")
 def homepage():
-    return render_template("homepage/index.html", apptitle = APP_TITLE)
+    global message_global
+    message = message_global
+    message_global = ''
+    return render_template("homepage/index.html",
+                           apptitle = APP_TITLE,
+                           message  = message,
+                           )
 
 
 @app.route("/ballots")
@@ -245,11 +247,22 @@ def index_ballots():
     else:
         ballot = {}
 
+    global message_global
+
+    try:
         ballot_address_list = get_ballot_address_list()
         ballots_data_raw = get_ballot_data(ballot_address_list)
         ballots = prepare_ballots_data(ballots_data_raw)
+    except web3.exceptions.BadFunctionCallOutput as e:
+        if   str(e) == 'Could not transact with/call contract function, is contract deployed correctly and chain synced?':
+            message_body =  "Momentan ist keine BallotListe konfiguriert. Bitte benachrichtigen Sie den Administrator."
+        else:
+            message_body = 'Bitte versuchen Sie es später nocheinmal'
 
-    global message_global
+        message_global ={'header': 'Achtung', 'body': message_body}
+
+        return redirect(url_for('homepage'))
+
     message = message_global
     message_global = ''
 

@@ -67,6 +67,15 @@ let
         sha512 = "oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==";
       };
     };
+    "@tailwindcss/custom-forms-0.2.1" = {
+      name = "_at_tailwindcss_slash_custom-forms";
+      packageName = "@tailwindcss/custom-forms";
+      version = "0.2.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/@tailwindcss/custom-forms/-/custom-forms-0.2.1.tgz";
+        sha512 = "XdP5XY6kxo3x5o50mWUyoYWxOPV16baagLoZ5uM41gh6IhXzhz/vJYzqrTb/lN58maGIKlpkxgVsQUNSsbAS3Q==";
+      };
+    };
     "@types/parse-json-4.0.0" = {
       name = "_at_types_slash_parse-json";
       packageName = "@types/parse-json";
@@ -247,13 +256,13 @@ let
         sha512 = "QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==";
       };
     };
-    "caniuse-lite-1.0.30001263" = {
+    "caniuse-lite-1.0.30001264" = {
       name = "caniuse-lite";
       packageName = "caniuse-lite";
-      version = "1.0.30001263";
+      version = "1.0.30001264";
       src = fetchurl {
-        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001263.tgz";
-        sha512 = "doiV5dft6yzWO1WwU19kt8Qz8R0/8DgEziz6/9n2FxUasteZNwNNYSmJO3GLBH8lCVE73AB1RPDPAeYbcO5Cvw==";
+        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001264.tgz";
+        sha512 = "Ftfqqfcs/ePiUmyaySsQ4PUsdcYyXG2rfoBVsk3iY1ahHaJEw65vfb7Suzqm+cEkwwPIv/XWkg27iCpRavH4zA==";
       };
     };
     "chalk-2.4.2" = {
@@ -967,6 +976,15 @@ let
         sha512 = "pRmzw/XUcwXGpD9aI9q/0XOwLNygjETJ8y0ao0wdqprrzDa4YnxLcz7fQRZr8voh8V10kGhABbNcHVk5wHgWwg==";
       };
     };
+    "mini-svg-data-uri-1.3.3" = {
+      name = "mini-svg-data-uri";
+      packageName = "mini-svg-data-uri";
+      version = "1.3.3";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/mini-svg-data-uri/-/mini-svg-data-uri-1.3.3.tgz";
+        sha512 = "+fA2oRcR1dJI/7ITmeQJDrYWks0wodlOz0pAEhKYJ2IVc1z0AnwJUsKY2fzFmPAM3Jo9J0rBx8JAA9QQSJ5PuA==";
+      };
+    };
     "minimatch-3.0.4" = {
       name = "minimatch";
       packageName = "minimatch";
@@ -1021,13 +1039,13 @@ let
         sha512 = "wo2DpQkQp7Sjm2A0cq+sN7EHKO6Sl0ctXeBdFZrL9T9+UywORbufTcTZxom8YqpLQt/FqNMUkOpkZrJVYSKD3A==";
       };
     };
-    "node-releases-1.1.76" = {
+    "node-releases-1.1.77" = {
       name = "node-releases";
       packageName = "node-releases";
-      version = "1.1.76";
+      version = "1.1.77";
       src = fetchurl {
-        url = "https://registry.npmjs.org/node-releases/-/node-releases-1.1.76.tgz";
-        sha512 = "9/IECtNr8dXNmPWmFXepT0/7o5eolGesHUa3mtr0KlgnCvnZxwh2qensKL42JJY2vQKC3nIBXetFAqR+PW1CmA==";
+        url = "https://registry.npmjs.org/node-releases/-/node-releases-1.1.77.tgz";
+        sha512 = "rB1DUFUNAN4Gn9keO2K1efO35IDK7yKHCdCaIMvFO7yUYmmZYeDjnGKle26G4rwj+LKRQpjyUUvMkPglwGCYNQ==";
       };
     };
     "normalize-path-3.0.0" = {
@@ -1444,6 +1462,15 @@ let
         sha512 = "65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==";
       };
     };
+    "traverse-0.6.6" = {
+      name = "traverse";
+      packageName = "traverse";
+      version = "0.6.6";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/traverse/-/traverse-0.6.6.tgz";
+        sha1 = "cbdf560fd7b9af632502fed40f918c157ea97137";
+      };
+    };
     "universalify-2.0.0" = {
       name = "universalify";
       packageName = "universalify";
@@ -1548,6 +1575,7 @@ let
       sources."@nodelib/fs.scandir-2.1.5"
       sources."@nodelib/fs.stat-2.0.5"
       sources."@nodelib/fs.walk-1.2.8"
+      sources."@tailwindcss/custom-forms-0.2.1"
       sources."@types/parse-json-4.0.0"
       sources."acorn-7.4.1"
       sources."acorn-node-1.8.2"
@@ -1567,7 +1595,7 @@ let
       sources."bytes-3.1.0"
       sources."callsites-3.1.0"
       sources."camelcase-css-2.0.1"
-      sources."caniuse-lite-1.0.30001263"
+      sources."caniuse-lite-1.0.30001264"
       sources."chalk-4.1.2"
       sources."chokidar-3.5.2"
       sources."cliui-7.0.4"
@@ -1648,13 +1676,14 @@ let
       sources."lodash.topath-4.5.2"
       sources."merge2-1.4.1"
       sources."micromatch-4.0.4"
+      sources."mini-svg-data-uri-1.3.3"
       sources."minimatch-3.0.4"
       sources."minimist-1.2.5"
       sources."modern-normalize-1.1.0"
       sources."nanocolors-0.2.12"
       sources."nanoid-3.1.28"
       sources."node-emoji-1.11.0"
-      sources."node-releases-1.1.76"
+      sources."node-releases-1.1.77"
       sources."normalize-path-3.0.0"
       sources."normalize-range-0.1.2"
       sources."object-hash-2.2.0"
@@ -1707,6 +1736,7 @@ let
       })
       sources."tmp-0.2.1"
       sources."to-regex-range-5.0.1"
+      sources."traverse-0.6.6"
       sources."universalify-2.0.0"
       sources."util-deprecate-1.0.2"
       sources."wrap-ansi-7.0.0"
@@ -1722,7 +1752,7 @@ let
     };
     production = true;
     bypassCache = true;
-    reconstructLock = true;
+    reconstructLock = false;
   };
 in
 {

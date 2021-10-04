@@ -3,12 +3,11 @@
   "version": "0.0.1",
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^4.0.2",
+    "@tailwindcss/custom-forms": "^0.2.1",
     "autoprefixer": "^10.2.5",
     "postcss": "^8.2.8",
     "postcss-cli": "^8.3.1",
     "tailwindcss": "^2.0.3"
   },
-  "devDependencies": {
-    "@tailwindcss/custom-forms": "^0.2.1"
-  }
+  "devDependencies": {}
 }
