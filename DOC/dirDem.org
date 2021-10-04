@@ -925,6 +925,125 @@ https://ethereum.org/en/eth2/
 https://medium.com/unitychain/intro-to-casper-ffg-9ed944d98b2d
 ***** ewasm
 https://github.com/ewasm/design
+*** web3.py
+**** web3_py_examples/examples at master · dappuniversity/web3_py_examples
+https://github.com/dappuniversity/web3_py_examples/tree/master/examples
+**** Develop and deploy your first Ethereum Smart Contract with Python
+http://blog.adnansiddiqi.me/develop-and-deploy-your-first-ethereum-smart-contract-with-python/
+**** kadnan/SolidityPythonTutorial: Learn how to write a basic smart contract in Solidity and then integrate it with Python app by using Web3.py
+https://github.com/kadnan/SolidityPythonTutorial
+**** Intro to Web3.py · Ethereum For Python Developers | Dapp University
+https://www.dappuniversity.com/articles/web3-py-intro
+**** Interacting With Smart Contract On Local Ethereum Blockchain
+https://www.kimsereylam.com/ethereum/solidity/python/2021/04/02/interacting-with-smart-contract-on-local-ethereum-blockchain.html
+*** voting
+**** How to build a distributed token-based voting app on Ethereum | by Doug Crescenzi | Upstate Interactive | Medium
+https://medium.com/upstate-interactive/how-to-build-a-distributed-token-based-voting-app-on-ethereum-8be26ba36d10
+**** I Built An Ethereum-based Fully Decentralized Voting System | Hacker Noon
+https://hackernoon.com/i-built-an-ethereum-based-fully-decentralized-voting-system-5x8t34gz
+**** Moving beyond coin voting governance
+https://vitalik.ca/general/2021/08/16/voting3.html
+**** Building Ethereum DApps: Voting with Custom Tokens - SitePoint
+https://www.sitepoint.com/building-ethereum-dapps-voting-custom-tokens/
+**** Towards better Ethereum voting protocols
+https://blog.colony.io/towards-better-ethereum-voting-protocols-7e54cb5a0119/
+**** Aragon One
+https://aragon.one/
+https://wiki.aragon.one/dev/apps/voting/
+https://aragon.one/core
+**** Ghost: Turn your audience into a business
+https://ghost.org/
+**** Liquid Democracy: True Democracy for the 21st Century | by Dominik Schiener | Organizer Sandbox | Medium
+https://medium.com/organizer-sandbox/liquid-democracy-true-democracy-for-the-21st-century-7c66f5e53b6f
+**** Quadratic voting | ERIC POSNER
+http://ericposner.com/quadratic-voting/
+**** An Introduction to Futarchy | Ethereum Foundation Blog
+https://blog.ethereum.org/2014/08/21/introduction-futarchy/
+**** vitalik.eth on Twitter: "I am starting to increasingly like conditional coin lock voting (ie. vote A, A wins -&gt; coins locked for X days) for decentralized governance" / Twitter
+https://twitter.com/vitalikbuterin/status/799503779498524675?lang=en
+**** Towards better Ethereum voting protocols
+https://blog.colony.io/towards-better-ethereum-voting-protocols-7e54cb5a0119/
+*** vyper
+**** Learn Vyper in Y Minutes
+https://learnxinyminutes.com/docs/vyper/
+**** documentation
+https://buildmedia.readthedocs.org/media/pdf/vyper/latest/vyper.pdf
+**** dynamic arrays
+***** Dynamic Arrays in Vyper. A simple library for ~~swerving~~ past… | by Kenny Peluso | Becoming Future | Medium
+https://medium.com/becoming-future/dynamic-arrays-in-vyper-e58d8d3ad683
+***** kpeluso/vyper-dynamic-array: Dynamic Arrays in Vyper
+https://github.com/kpeluso/vyper-dynamic-array
+***** VIP: Dynamic Arrays w/ Sizing · Issue #1440 · vyperlang/vyper
+https://github.com/vyperlang/vyper/issues/1440
+*** TODO tailwind
+**** Tailwind for emacs? : tailwindcss
+https://www.reddit.com/r/tailwindcss/comments/hog992/tailwind_for_emacs/
+**** merrickluo/lsp-tailwindcss: the lsp-mode client for tailwindcss
+https://github.com/merrickluo/lsp-tailwindcss
+*** moralis
+Think "Firebase of crypto"
+https://docs.moralis.io/
+*** ethereum-alarm-clock/ethereum-alarm-clock: Schedule transactions for the future
+https://github.com/ethereum-alarm-clock/ethereum-alarm-clock
+*** brownie
+**** Brownie Documentation
+https://eth-brownie.readthedocs.io/_/downloads/en/stable/pdf/
+**** Supercharged Ethereum Main Net Testing on your own Node with Brownie. | by matnad | Medium
+https://matnad.medium.com/supercharged-ethereum-main-net-testing-on-your-own-node-with-brownie-eb4cb886de7c
+*** ethereum+python
+**** INFO
+***** How to develop Ethereum contract using Python Flask? | by Neha Ghogale | Coinmonks | Medium
+https://medium.com/coinmonks/how-to-develop-ethereum-contract-using-python-flask-9758fe65976e
+***** A Python developer's introduction to Ethereum, part 1 | ethereum.org
+https://ethereum.org/en/developers/tutorials/a-developers-guide-to-ethereum-part-one/
+***** DApp Development for Python Programmers | by Salman Dabbakuti | Level Up Coding
+https://levelup.gitconnected.com/dapps-development-for-python-developers-f52b32b54f28
+***** python-dapp/app.py at master · Salmandabbakuti/python-dapp
+https://github.com/Salmandabbakuti/python-dapp/blob/master/app.py
+****** DApp Development for Python Programmers | by Salman Dabbakuti | Level Up Coding
+https://levelup.gitconnected.com/dapps-development-for-python-developers-f52b32b54f28
+****** Creating a Python Ethereum Interface: Part 1 | Hacker Noon
+https://hackernoon.com/creating-a-python-ethereum-interface-part-1-4d2e47ea0f4d
+****** Nick Williams – Medium
+https://medium.com/@enjeyw
+****** Ethereum Smart Contracts in Python: a comprehensive(ish) guide | Hacker Noon
+https://hackernoon.com/ethereum-smart-contracts-in-python-a-comprehensive-ish-guide-771b03990988
+****** Ethereum Smart Contracts in Python: a comprehensive(ish) guide | Hacker Noon
+https://hackernoon.com/ethereum-smart-contracts-in-python-a-comprehensive-ish-guide-771b03990988
+****** Ethereum Smart Contracts in Python: a comprehensive(ish) guide | Hacker Noon
+https://hackernoon.com/ethereum-smart-contracts-in-python-a-comprehensive-ish-guide-771b03990988
+****** Compiling, deploying and calling Ethereum smartcontract using Python - undefined
+https://yohanes.gultom.id/2018/11/28/compiling-deploying-and-calling-ethereum-smartcontract-using-python/
+****** Deploy a Smart Contract using Python: How-to | by Patrick Collins | codeburst
+https://codeburst.io/deploy-a-smart-contract-using-python-how-to-b62de0124b
+**** video
+***** web3.py flask - YouTube
+https://www.youtube.com/results?search_query=web3.py+flask
+***** Ethereum for Python Developers - Web3.py #1 - YouTube
+https://www.youtube.com/watch?v=SAi5rYFh7yw
+***** Python & web3: send transaction - YouTube
+https://www.youtube.com/watch?v=w1ioEBlyuLQ
+***** Web3.py Tutorial - Build Your Own Etherscan (How to Defi Part 2) - YouTube
+https://www.youtube.com/watch?v=XcHNWuMietY
+***** Blockchain Python programming tutorial [FULL COURSE] Web3.py - YouTube
+https://www.youtube.com/watch?v=pZSegEXtgAE
+***** Connecting To Ethereum Using Python - Python Blockchain Programming - YouTube
+https://www.youtube.com/watch?v=upmutq1Vzng
+***** Program A Python Dapp On Ethereum (Using Flask and Brownie) - Smart Contract Programming - YouTube
+https://www.youtube.com/watch?v=l_4wy7HOUJI
+*** python-development
+**** Intro to Web3.py · Ethereum For Python Developers | Dapp University
+https://www.dappuniversity.com/articles/web3-py-intro
+*** byExample
+**** vyper
+https://vyper.readthedocs.io/en/v0.2.11/vyper-by-example.html#voting
+**** solidity
+https://solidity-by-example.org/
+https://docs.soliditylang.org/en/v0.8.7/solidity-by-example.html
+https://learnxinyminutes.com/docs/solidity/
+*** solidicy
+**** DEPRECATED?? rocky/solc-lsp: LSP functions for solidity using solc's AST
+https://github.com/rocky/solc-lsp
 *** ganache--geth
 **** start ganache
 #+begin_src shell :results drawer
