@@ -33,7 +33,7 @@ curl -g -6 'http://[2a02:8070:279d:2700:4754:be88:8d7:61ac]:8080'
 edit =shell.nix=
 stop flask
 reload =shell.nix=
-*** change on =settings.json=
+*** change on =env.toml=
 needs a flask-restart
 ** TODO TODOS
 *** =default.nix= needs python implementation

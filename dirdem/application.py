@@ -15,20 +15,19 @@ import web3
 
 ### ASSETS
 assets = Environment(app)
-css = Bundle("src/main.css", output="dist/main.css", filters="postcss")
-js = Bundle("src/*.js", output="dist/main.js")
+css = Bundle('src/main.css', output='dist/main.css', filters='postcss')
+js = Bundle('src/*.js', output='dist/main.js')
 
-assets.register("css", css)
-assets.register("js", js)
+assets.register('css', css)
+assets.register('js', js)
 css.build()
 js.build()
 
-APP_TITLE = "dirĐem"
-
+APP_TITLE = 'dirĐem'
+message_global   = ''
 
 ### CONFIGURATION
 app.config.update(load_setting())
-
 web3_provider = app.config['WEB3_PROVIDER']
 if 'infura' in web3_provider:
     web3_provider += os.getenv('WEB3_INFURA_PROJECT_ID')
@@ -60,16 +59,16 @@ def is_dummy() -> bool:
 
 def etherscan_url_prefix():
     ### TODO: set ethernet only if production
-    app.config['ETHERNET'] = "kovan"
-    net_prefix = app.config['ETHERNET'] + "."
-    return "https://" + net_prefix + "etherscan.io/address/"
+    app.config['ETHERNET'] = 'kovan'
+    net_prefix = app.config['ETHERNET'] + '.'
+    return 'https://' + net_prefix + 'etherscan.io/address/'
 
 
 def get_ballot_address_list():
     with open('./smartcontract/build/contracts/BallotList.json', 'r') as f:
         datastore = json.load(f)
-    abi = datastore["abi"]
-    # contract_address = datastore["contract_address"]
+    abi = datastore['abi']
+    # contract_address = datastore['contract_address']
     contract_address = app.config['BALLOT_LIST_ADDRESS']
 
     ### Create the contract instance with the newly-deployed address
@@ -92,7 +91,7 @@ def get_ballot_address_list():
 def get_ballot_data(ballot_address_list):
     with open('./smartcontract/build/contracts/Ballot.json', 'r') as f:
         datastore = json.load(f)
-    abi = datastore["abi"]
+    abi = datastore['abi']
 
     ballot_data_list = []
 
@@ -250,10 +249,15 @@ def index_ballots():
         ballots_data_raw = get_ballot_data(ballot_address_list)
         ballots = prepare_ballots_data(ballots_data_raw)
 
+    global message_global
+    message = message_global
+    message_global = ''
+
     return render_template("ballot/index.html",
                            apptitle = APP_TITLE,
                            titlePrefix = "Abstimmungen",
-                           ballots = ballots
+                           ballots = ballots,
+                           message = message,
                            )
 
 
@@ -273,7 +277,7 @@ def create_ballot():
 
 @app.route("/ballots", methods=["POST"])
 def store_ballot():
-    ballot_address = create_ballot_smartcontract(request.form['title'], request.form['question'], request.form['dateTimeClosing'])
+    ballot_address = create_ballot_smartcontract(request.form.get('title'), request.form.get('question'), request.form.get('dateTimeClosing'))
 
     return redirect(url_for('show_ballot', id=ballot_address))
 
@@ -301,11 +305,15 @@ def show_ballot(id):
         ballots = prepare_ballots_data(ballots_data_raw)
         ballot = ballots[0]
 
+    global message_global
+    message = message_global
+    message_global = ''
     return render_template("ballot/showAndCreate.html",
                            data        = ballot,
                            apptitle    = APP_TITLE,
                            titlePrefix = "Abstimmung",
 			   title       = ballot['title'],
+                           message = message,
                            )
 
 
@@ -345,12 +353,27 @@ def create_vote(id):
 
 @app.route("/votes", methods=["POST"])
 def store_vote():
-    ballot_address = request.form['address']
-    vote = True if request.form['result'] == 'true' else False
+    ballot_address = request.form.get('address')
+    vote = True if request.form.get('result') == 'true' else False
 
-    vote_on_ballot(ballot_address, vote, request.form['identification'])
+    try:
+        vote_on_ballot(ballot_address, vote, request.form.get('identification'))
+    except web3.exceptions.ContractLogicError as e:
+        if   str(e) == 'execution reverted: VM Exception while processing transaction: revert ballot already closed':
+            message_body =  'Die Abstimmung ist bereits beendet'
+        elif str(e) == 'execution reverted: VM Exception while processing transaction: revert cannot vote multiple times':
+            message_body = 'Sie haben bereits abgestimmt'
+        else:
+            message_body = 'Bitte versuchen Sie es später nocheinmal'
+
+        global message_global
+        message_global ={'header': 'Achtung', 'body': message_body}
+
+        return redirect(url_for('show_ballot', id=ballot_address))
 
     return redirect(url_for('show_ballot', id=ballot_address))
+
+
 
 
 if __name__ == "__main__":

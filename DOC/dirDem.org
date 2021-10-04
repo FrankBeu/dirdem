@@ -1135,6 +1135,12 @@ https://www.youtube.com/watch?v=0JrDbvBClEA&list=PLVOHzVzbg7bFUaOGwN0NOgkTItUAVy
 #+end_src
 *** show contract on etherscan
 e.g.: https://etherscan.io/address/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48#code
+** Projektabgabe
+Das Projekt bewerte ich dann innerhalb einer Woche
+sollte mir dann spätestens heute Abend vorliegen:
+als Zip per Mail an cimpython1@gmail.com
+**** eMail
+cimpython1@gmail.com
 ** 2  IDEEN
 *** Tools/Tech
 **** DONE scrum
