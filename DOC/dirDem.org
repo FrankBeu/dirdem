@@ -6,7 +6,7 @@
 #+title:  dirĐem
 #+subtitle: distributed decision making
 
-* Presentation
+* Presentation                                                     :noexport:
 ** install a wallet
 *** metamask
 https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn
@@ -45,7 +45,11 @@ verschlechtern
 5min later
 ** RESULT
 *** TODO: url to result + qr
-* dirĐem - Vision
+* dirĐem - Vision                                                  :noexport:
+*** VISION
+**** ALTS
+***** futarchy
+http://mason.gmu.edu/~rhanson/futarchy.html
 * dirĐem - Tech/HowTo
 ** vision
 ** ideas
@@ -112,6 +116,20 @@ small, often, fast - get from reading to doing
 *** access to net programmatically
 **** infura
 https://infura.io/dashboard/ethereum
+*** ganache--geth
+**** start ganache
+#+begin_src shell :results drawer
+  ganache-cli --mnemonic "monitor old wheel ask taxi tennis net list distance bright boss kitten"
+#+end_src
+**** attach geth
+#+begin_src shell :results drawer
+  geth attach http://localhost:8545
+#+end_src
+**** on geth-console
+***** create new accont
+#+begin_src js
+  personal.newAccount()
+#+end_src
 ** brownie
 https://iamdefinitelyahuman.medium.com/getting-started-with-brownie-part-1-9b2181f4cb99
 *** commands
@@ -435,7 +453,7 @@ curl http://localhost:5000/user
 ** flaskTailwindHtmx
 https://github.com/testdrivenio/flask-htmx-tailwind
 https://testdriven.io/blog/flask-htmx-tailwind/
-*** ??
+*** additional info
 https://dev.to/ffpaiki/flask-tailwindcss-flask-assets-51mo
 *** run
 #+begin_src shell :results drawer
@@ -602,61 +620,84 @@ https://web3py.readthedocs.io/en/stable/web3.eth.account.html#local-vs-hosted-ke
 ****** build transaction
 https://ethereum.stackexchange.com/questions/70240/how-to-send-transaction-with-web3-py
 * Ethereum - Web3.0
+** INFO
+https://ethereum.org/en/
+*** [#A] wiki
+https://eth.wiki/
+https://github.com/ethereum/wiki/wiki/RLP
+*** ECR
+**** ERC20 Tokens für fungible Sachen
+**** ERC721 Tokens für nicht fungible Sachen
+**** ERC725 Identity Keys
+https://erc725alliance.org/
+**** ERC735 Identity Claim
+https://eth.wiki/ideas/erc-735
 ** BuildingBlocks
 *** Ethereum Virtual Machine (EVM)
 *** decentralized Storage
-- IPFS
+**** IPFS
   https://cluster.ipfs.io/documentation/quickstart/
-- Swarm
+**** swarm
+https://docs.ethswarm.org/docs/
+https://docs.ethswarm.org/swarm-whitepaper.pdf
+https://docs.ethswarm.org/the-book-of-swarm.pdf
 *** Whisper
 decentralized Communication
-** wallet
-enables interaction
-FOSS selection
-*** Find an Ethereum Wallet
-https://ethereum.org/en/wallets/find-wallet/
-*** MetaMask - A crypto wallet & gateway to blockchain apps
-https://metamask.io/
-https://github.com/MetaMask
-**** Introduction | MetaMask Docs
-https://docs.metamask.io/guide/#why-metamask
-*** MyEtherWallet
-https://www.myetherwallet.com/
-https://github.com/myetherwallet
-*** MathWallet
-https://mathwallet.org/en-us/
-https://github.com/mathwallet
-*** Status - Private, Secure Communication
-https://status.im/
-https://github.com/status-im
-*** WallΞTH
-https://walleth.org/
-https://github.com/walleth
-** smartContracts
-https://explore.iteratec.com/blog/wie-funktioniert-eigentlich-die-blockchain-teil-2
-**** deployment
-1. create wallet
-   https://metamask.io/
-3. get ether
-   https://faucet.metamask.io/  ??
-4. write sc (or use an available)
-4. compile sc with truffle
-5. deploy
-**** dataStorage
-***** stack
-   a last-in-first-out container to which values can be pushed and popped
-***** memory
-  an infinitely expandable byte array
-***** long-term storage
-  a key/value store.
-  Unlike stack and memory,
-  which reset after computation ends,
-  storage persists for the long term.
-**** libraries
-https://openzeppelin.com/
-**** testing
-https://iamdefinitelyahuman.medium.com/
+** nodes
+*** clients
+**** a node is a running client
+including an EVM implementation
+**** ganache                                                          :js:
+https://www.trufflesuite.com/ganache
+https://docs.nethereum.com/en/latest/ethereum-and-clients/ganache-cli/
+https://www.trufflesuite.com/docs/ganache/quickstart
+***** TODO overview
+https://www.trufflesuite.com/docs/ganache/overview
+**** standalone evm
+***** hyperledger burrow                                         :golang:
+EVM + WASM
+https://hyperledger.github.io/burrow/#/
+https://wiki.hyperledger.org/display/burrow
+https://github.com/hyperledger/burrow
+**** nodetracker
+https://etherscan.io/nodetracker
+**** geth                                                         :golang:
+**** parity
+***** parity-ethereum: predecessor                                 :rust:
+https://github.com/openethereum/parity-ethereum
+***** openethereum: successor                                      :rust:
+**** erigon                                                       :golang:
+https://github.com/ledgerwatch/erigon
+*** hosted / platform
+**** infura                                                          :golang:
+https://infura.io/
+https://blog.infura.io/getting-started-with-infura-28e41844cc89/
+***** Pricing
+https://infura.io/pricing
+Ethereum Mainnet and Testnets
+100,000 Requests/Day
+3 Projects
+Community Support Forum
+***** tutorials
+https://github.com/INFURA/tutorials/wiki
+*** INFO
+**** size
+***** fullNode
+https://etherscan.io/chartsync/chaindefault
+****** geth
+ ~ 1TB
+****** openEthereum
+ ~ 0.5TB
+***** archive
+~ 8.5TB
+https://etherscan.io/chartsync/chainarchive
+https://medium.com/@marcandrdumas/are-ethereum-full-nodes-really-full-an-experiment-b77acd086ca7
+***** Bitcoin
+https://ycharts.com/indicators/bitcoin_blockchain_size
 ** testnets
+https://docs.openzeppelin.com/learn/connecting-to-public-test-networks#testnet-list
+*** comparison
+https://ethereum.stackexchange.com/questions/27048/comparison-of-the-different-testnets
 *** explorer
 https://etherscan.io/
 **** can all be accessed via etherscan
@@ -666,6 +707,147 @@ https://rinkeby.etherscan.io/
 https://ropsten.etherscan.io/
 **** bitcoin
 https://www.blockchain.com/explorer
+**** contract
+e.g.: https://etherscan.io/address/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48#code
+*** specific
+**** görli
+https://github.com/goerli/testnet
+*** [#A] faucet
+**** ropsten
+**** kovan
+***** 0.001
+https://ethdrop.dev/
+3x then wait for 24h
+****** authenticated
+1x then wait 24h
+https://gitter.im/kovan-testnet/faucet
+**** 5
+https://faucet.dimensions.network/
+- every 24h
+**** 0.3
+https://faucet.ropsten.be/
+** state
+the record of all transactions as well as the EVM’s present state
+is stored in the blockchain,
+which in turn is stored and agreed upon by all nodes.
+https://ethereum.org/en/developers/docs/intro-to-ethereum/
+** wallet
+enables interaction
+FOSS selection
+*** Find an Ethereum Wallet
+https://ethereum.org/en/wallets/find-wallet/
+https://ethereum.org/en/wallets/find-wallet/?filters=has_explore_dapps,has_card_deposits,has_high_volume_purchases,has_multisig
+*** Vergleich
+https://www.blockchaincenter.net/ethereum-wallet/
+**** mew wallet
+mobile
+*** metamask
+browser-addon
+https://metamask.io/
+https://github.com/MetaMask
+**** Introduction | MetaMask Docs
+https://docs.metamask.io/guide/#why-metamask
+*** [#A] MyEtherWallet
+mew
+https://www.myetherwallet.com/
+https://github.com/myetherwallet
+https://github.com/MyEtherWallet/MyEtherWallet
+https://www.myetherwallet.com/
+*** MathWallet
+https://mathwallet.org/en-us/
+https://github.com/mathwallet
+*** Status - Private, Secure Communication
+https://status.im/
+https://github.com/status-im
+*** WallΞTH
+https://walleth.org/
+https://github.com/walleth
+*** etherwall
+https://github.com/almindor/etherwall
+https://www.etherwall.com/
+*** protection
+https://privacypros.io/products/the-billfodl/
+*** hardware
+**** Digital Bitbox
+https://shiftcrypto.ch/
+**** Trezor
+https://trezor.io/
+**** KeepKey
+https://keepkey.myshopify.com
+**** Ledger
+Incident: Verlust von Kundendaten
+** smartContracts
+https://explore.iteratec.com/blog/wie-funktioniert-eigentlich-die-blockchain-teil-2
+https://ethereum.org/en/developers/docs/smart-contracts/languages/
+*** deployment
+1. create wallet
+   https://metamask.io/
+3. get ether
+   https://faucet.metamask.io/  ??
+4. write sc (or use an available)
+4. compile sc with truffle
+5. deploy
+*** dataStorage
+**** stack
+   a last-in-first-out container to which values can be pushed and popped
+**** memory
+  an infinitely expandable byte array
+**** long-term storage
+  a key/value store.
+  Unlike stack and memory,
+  which reset after computation ends,
+  storage persists for the long term.
+*** libraries
+https://openzeppelin.com/
+*** [#A] testing
+https://iamdefinitelyahuman.medium.com/
+*** Diamonds
+is a way to organize your Solidity code
+https://dev.to/mudgen/understanding-diamonds-on-ethereum-1fb
+https://github.com/ethereum/EIPs/blob/master/EIPS/eip-2535.md
+*** best-practices
+https://github.com/ConsenSys/smart-contract-best-practices
+*** langs
+**** solidity
+https://docs.soliditylang.org/en/v0.8.2/installing-solidity.html
+https://docs.soliditylang.org/en/develop/introduction-to-smart-contracts.html#
+***** utils
+https://github.com/ethereum/dapp-bin/tree/master/library/
+***** memory
+https://docs.soliditylang.org/en/develop/introduction-to-smart-contracts.html#storage-memory-and-the-stack
+**** vyper                                                        :python:
+Vyper does not strive to be a 100% replacement for everything that can be done in Solidity;
+it will deliberately forbid things or make things harder if it deems fit to do so for the goal of increasing security.
+https://medium.com/block-journal/get-started-with-vyper-the-pythonic-ethereum-smart-contract-language-e5e58969087e
+https://kauri.io/#collections/Getting%20Started/an-introduction-to-smart-contracts-with-vyper/
+https://vyper.readthedocs.io/en/stable/testing-contracts.html
+https://vyper.fun/?ref=vyperlang#/
+***** decorators
+https://vyper.readthedocs.io/en/v0.1.0-beta.12/structure-of-a-contract.html#decorators
+**** TODO [#A] LLL                                                     :lisp:
+Low-level Lisp-like Language
+direct access to memory and storage
+In a recent reimplementation I did, the LLL binary ended up 70% smaller than the Solidity equivalent.
+https://media.consensys.net/an-introduction-to-lll-for-ethereum-smart-contract-development-e26e38ea6c23
+https://lll-docs.readthedocs.io/en/latest/
+https://gitlab.com/veox/emacs-lll-mode
+***** compiler
+https://media.consensys.net/installing-ethereum-compilers-61d701e78f6
+*** [#A] compilation/deployment/frameworks
+https://kauri.io/#communities/Getting%20started%20with%20dapp%20development/understanding-smart-contract-compilation-and-depl/
+*** cheatSheet
+solidity & vyper
+https://reference.auditless.com/cheatsheet/
+*** tokens
+https://docs.openzeppelin.com/contracts/2.x/tokens#different-kinds-of-tokens
+**** difference
+***** non-fungibles assets: which one
+***** fungible assets:          how much
+**** ERC-20:         Fungible Tokens
+https://eips.ethereum.org/EIPS/eip-20
+*****  totalSupply = tokensIActuallyWant * (10 ** decimals)
+**** EIP-721: Non Fungible Tokens
+https://eips.ethereum.org/EIPS/eip-721
 ** Đapps
 apps built on a decentralized network combining a
 - smart contract and a
@@ -674,30 +856,94 @@ https://ethereum.org/en/dapps/
 https://www.stateofthedapps.com/
 https://explore.iteratec.com/blog/wie-funktioniert-eigentlich-die-blockchain-teil-3
 https://etherscan.io/dapp
-** gas
-*** burn-since-london
+**** Umsetzung
+In einer vollständig dezentralen Umsetzung gemäß der Vision von Web 3.0 wäre auch das Frontend eines ĐApps dezentral gehosted.
+Dafür bieten sich dezentrale Speicherdienste wie IPFS oder Swarm an.
+Letzteres gehört neben der Ethereum Virtual Machine (EVM) und Whisper zu den drei Grundbausteinen von Ethereum.
+** currency
+https://ethdocs.org/en/latest/ether.html#denominations
+*** wei
+https://en.wikipedia.org/wiki/Wei_Dai
+https://www.investopedia.com/terms/b/bmoney.asp
+*** gas
+is a computational unit (quantity)
+has to be multiplied with gasPrice (in gwei) to get a bill
+**** burn-since-london
 transition  to PoS
 \+ transaction prices
   https://decrypt.co/79103/more-than-70000-eth-has-now-been-burned-by-eip-1559
-** tokens
-https://docs.openzeppelin.com/contracts/2.x/tokens#different-kinds-of-tokens
-*** difference
-**** non-fungibles assets: which one
-**** fungible assets:          how much
-*** ERC-20:         Fungible Tokens
-https://eips.ethereum.org/EIPS/eip-20
-****  totalSupply = tokensIActuallyWant * (10 ** decimals)
-*** EIP-721: Non Fungible Tokens
-https://eips.ethereum.org/EIPS/eip-721
+**** calculation + example
+https://ethereum.org/en/developers/docs/transactions/#on-gas
+***** ~baseFeePerGas~
+will be burned
+***** ~maxPriorityFeePerGas~
+will be transfered to miner
+***** ~from~ will have to pay
+***** tracker
+https://etherscan.io/gastracker
 ** oracles
 https://chain.link/
 #+begin_src shell :results drawer
  brownie bake chainlink-mix
 #+end_src
+** langs
+*** golang
+https://ethereum.org/en/developers/docs/programming-languages/golang/
+https://github.com/ethereum/go-ethereum
+https://pkg.go.dev/crypto
+**** TODO book
+https://goethereumbook.org/en/
+https://goethereumbook.org/en/GLOSSARY.html
+**** TODO tutorial
+https://www.freecodecamp.org/news/build-a-blockchain-in-golang-from-scratch/
+*** dart
+https://ethereum.org/en/developers/docs/programming-languages/dart/
+https://pub.dev/packages/web3dart
+*** python
+https://ethereum.org/en/developers/docs/programming-languages/python/
+https://ethereum.org/en/learn/
+https://ethereum.org/de/python/
+**** framework
+https://github.com/eth-brownie/brownie
+**** vyper
+https://vyper.readthedocs.io/en/latest/installing-vyper.html
+**** brownie
+https://github.com/eth-brownie/brownie
+**** node??
+https://py-evm.readthedocs.io/en/latest/guides/
+https://github.com/ethereum/py-evm
+** tools
+*** [#A] overview
+https://github.com/ConsenSys/ethereum-developer-tools-list
+*** hashing-online
+https://emn178.github.io/online-tools/keccak_256.html
+*** frameworks
+**** brownie                                                      :python:
+https://readthedocs.org/projects/eth-brownie/downloads/pdf/v1.3.1_a/
+https://github.com/eth-brownie/brownie
+**** truffle                                                          :js:
+https://www.trufflesuite.com
+**** DEPRECATED perigord                                          :golang:
+https://github.com/polyswarm/perigord
+currently halted - archived
+**** harthat                                                  :typescript:
+https://hardhat.org/
+https://github.com/nomiclabs/hardhat
+** ethereum2.0
+https://ethereum.org/en/eth2/
+*** consensus
+**** Casper
+https://medium.com/unitychain/intro-to-casper-ffg-9ed944d98b2d
+*** ewasm
+https://github.com/ewasm/design
 ** alternatives
 *** other chains
 *** hashed/verifyable Deploys
 **** nixos
+** misc
+*** identity
+https://github.com/OriginProtocol/origin-playground/tree/master/contracts
+https://ethereum.stackexchange.com/questions/57851/erc725-with-erc735-identity-and-claims
 * NULL
 {{{end-of-talk}}}
 * AKTUELLES
@@ -712,219 +958,6 @@ https://github.com/testdrivenio/flask-vue-kubernetes
 https://gitlab.com/testdriven/flask-tdd-docker
 ***** mjhea0/flaskr-tdd: Flaskr: Intro to Flask, Test-Driven Development (TDD), and JavaScript
 https://github.com/mjhea0/flaskr-tdd
-*** votingRights
-https://docs.openzeppelin.com/contracts/2.x/tokens#different-kinds-of-tokens
-*** programming
-**** smartContracts
-***** ballotCreationContract
-creates a ballot as smartContract
-***** ballot
-- persist result to storage
-- resent ehter to admin
-*** vision
-- transparent voting
-- transparent phrasing
-- transparent creation of phrasings
-- show usage of ethereum testnets
-- smart contract
-**** ideas
-- testdriven
-- scrum
-*** ethereum
-https://ethereum.org/en/
-**** TODO wallet
-https://ethereum.org/en/wallets/find-wallet/?filters=has_explore_dapps,has_card_deposits,has_high_volume_purchases,has_multisig
-***** Vergleich
-https://www.blockchaincenter.net/ethereum-wallet/
-***** [#A] mew
-https://github.com/MyEtherWallet/MyEtherWallet
-https://www.myetherwallet.com/
-****** mew wallet
-mobile
-***** protection
-https://privacypros.io/products/the-billfodl/
-***** etherwall
-https://github.com/almindor/etherwall
-https://www.etherwall.com/
-***** metamask
-browser-addon
-https://github.com/bitpay/wallet
-***** state
-the record of all transactions as well as the EVM’s present state
-is stored in the blockchain,
-which in turn is stored and agreed upon by all nodes.
-https://ethereum.org/en/developers/docs/intro-to-ethereum/
-***** mist
-full node
-***** hardware
-****** Digital Bitbox
-https://shiftcrypto.ch/
-****** Trezor
-https://trezor.io/
-****** KeepKey
-https://keepkey.myshopify.com
-****** Ledger
-Incident: Verlust von Kundendaten
-**** [#A] wiki
-https://eth.wiki/
-https://github.com/ethereum/wiki/wiki/RLP
-**** [#A] tools
-https://github.com/ConsenSys/ethereum-developer-tools-list
-**** golang
-https://ethereum.org/en/developers/docs/programming-languages/golang/
-https://github.com/ethereum/go-ethereum
-https://pkg.go.dev/crypto
-***** TODO book
-https://goethereumbook.org/en/
-https://goethereumbook.org/en/GLOSSARY.html
-***** TODO tutorial
-https://www.freecodecamp.org/news/build-a-blockchain-in-golang-from-scratch/
-**** testnets
-- Ropsten
-- görli
-https://github.com/goerli/testnet
-https://ethereum.stackexchange.com/questions/27048/comparison-of-the-different-testnets
-***** [#A] faucet
-****** ropsten
-****** kovan
-******* 0.001
-https://ethdrop.dev/
-3x then wait for 24h
-******** authenticated
-1x then wait 24h
-https://gitter.im/kovan-testnet/faucet
-****** 5
-https://faucet.dimensions.network/
-- every 24h
-****** 0.3
-https://faucet.ropsten.be/
-**** best-practices
-https://github.com/ConsenSys/smart-contract-best-practices
-**** hashing-online
-https://emn178.github.io/online-tools/keccak_256.html
-**** explorer
-***** etherscan
-https://etherscan.io/
-**** dart
-https://ethereum.org/en/developers/docs/programming-languages/dart/
-https://pub.dev/packages/web3dart
-**** python
-https://ethereum.org/en/developers/docs/programming-languages/python/
-https://ethereum.org/en/learn/
-https://ethereum.org/de/python/
-***** framework
-https://github.com/eth-brownie/brownie
-***** vyper
-https://vyper.readthedocs.io/en/latest/installing-vyper.html
-***** brownie
-https://github.com/eth-brownie/brownie
-***** node??
-https://py-evm.readthedocs.io/en/latest/guides/
-https://github.com/ethereum/py-evm
-**** frameworks
-***** brownie                                                    :python:
-https://readthedocs.org/projects/eth-brownie/downloads/pdf/v1.3.1_a/
-https://github.com/eth-brownie/brownie
-***** truffle                                                        :js:
-https://www.trufflesuite.com
-***** DEPRECATED perigord                                            :golang:
-https://github.com/polyswarm/perigord
-currently halted - archived
-***** harthat                                                    :typescript:
-https://hardhat.org/
-https://github.com/nomiclabs/hardhat
-**** smartContracts
-https://ethereum.org/en/developers/docs/smart-contracts/languages/
-***** solidity
-https://docs.soliditylang.org/en/v0.8.2/installing-solidity.html
-https://docs.soliditylang.org/en/develop/introduction-to-smart-contracts.html#
-****** utils
-https://github.com/ethereum/dapp-bin/tree/master/library/
-****** memory
-https://docs.soliditylang.org/en/develop/introduction-to-smart-contracts.html#storage-memory-and-the-stack
-***** vyper                                                          :python:
-Vyper does not strive to be a 100% replacement for everything that can be done in Solidity;
-it will deliberately forbid things or make things harder if it deems fit to do so for the goal of increasing security.
-https://medium.com/block-journal/get-started-with-vyper-the-pythonic-ethereum-smart-contract-language-e5e58969087e
-https://kauri.io/#collections/Getting%20Started/an-introduction-to-smart-contracts-with-vyper/
-https://vyper.readthedocs.io/en/stable/testing-contracts.html
-https://vyper.fun/?ref=vyperlang#/
-****** decorators
-https://vyper.readthedocs.io/en/v0.1.0-beta.12/structure-of-a-contract.html#decorators
-***** TODO LLL                                                         :lisp:
-Low-level Lisp-like Language
-direct access to memory and storage
-In a recent reimplementation I did, the LLL binary ended up 70% smaller than the Solidity equivalent.
-https://media.consensys.net/an-introduction-to-lll-for-ethereum-smart-contract-development-e26e38ea6c23
-https://lll-docs.readthedocs.io/en/latest/
-https://gitlab.com/veox/emacs-lll-mode
-****** compiler
-https://media.consensys.net/installing-ethereum-compilers-61d701e78f6
-***** files
-https://remix.ethereum.org/#optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.7+commit.e28d00a7.js
-***** [#A] compilation/deployment/frameworks
-https://kauri.io/#communities/Getting%20started%20with%20dapp%20development/understanding-smart-contract-compilation-and-depl/
-***** cheatSheet
-solidity & vyper
-https://reference.auditless.com/cheatsheet/
-**** clients
-***** a node is a running client
-including an EVM implementation
-***** ganache                                                            :js:
-https://www.trufflesuite.com/ganache
-https://docs.nethereum.com/en/latest/ethereum-and-clients/ganache-cli/
-https://www.trufflesuite.com/docs/ganache/quickstart
-****** TODO overview
-https://www.trufflesuite.com/docs/ganache/overview
-***** standalone evm
-****** hyperledger burrow                                             :golang:
-EVM + WASM
-https://hyperledger.github.io/burrow/#/
-https://wiki.hyperledger.org/display/burrow
-https://github.com/hyperledger/burrow
-***** nodetracker
-https://etherscan.io/nodetracker
-***** geth                                                           :golang:
-***** parity
-****** parity-ethereum: predecessor                                    :rust:
-https://github.com/openethereum/parity-ethereum
-****** openethereum: successor                                         :rust:
-***** erigon                                                         :golang:
-https://github.com/ledgerwatch/erigon
-**** storage
-***** swarm
-https://docs.ethswarm.org/docs/
-https://docs.ethswarm.org/swarm-whitepaper.pdf
-https://docs.ethswarm.org/the-book-of-swarm.pdf
-**** platform
-***** infura                                                         :golang:
-https://infura.io/
-https://blog.infura.io/getting-started-with-infura-28e41844cc89/
-****** Pricing
-https://infura.io/pricing
-Ethereum Mainnet and Testnets
-100,000 Requests/Day
-3 Projects
-Community Support Forum
-****** tutorials
-https://github.com/INFURA/tutorials/wiki
-**** identity
-https://github.com/OriginProtocol/origin-playground/tree/master/contracts
-https://ethereum.stackexchange.com/questions/57851/erc725-with-erc735-identity-and-claims
-**** ECR
-***** ERC20 Tokens für fungible Sachen
-***** ERC721 Tokens für nicht fungible Sachen
-***** ERC725 Identity Keys
-https://erc725alliance.org/
-***** ERC735 Identity Claim
-https://eth.wiki/ideas/erc-735
-**** ethereum2.0
-https://ethereum.org/en/eth2/
-***** consensus
-****** Casper
-https://medium.com/unitychain/intro-to-casper-ffg-9ed944d98b2d
-***** ewasm
-https://github.com/ewasm/design
 *** web3.py
 **** web3_py_examples/examples at master · dappuniversity/web3_py_examples
 https://github.com/dappuniversity/web3_py_examples/tree/master/examples
@@ -936,33 +969,8 @@ https://github.com/kadnan/SolidityPythonTutorial
 https://www.dappuniversity.com/articles/web3-py-intro
 **** Interacting With Smart Contract On Local Ethereum Blockchain
 https://www.kimsereylam.com/ethereum/solidity/python/2021/04/02/interacting-with-smart-contract-on-local-ethereum-blockchain.html
-*** voting
-**** How to build a distributed token-based voting app on Ethereum | by Doug Crescenzi | Upstate Interactive | Medium
-https://medium.com/upstate-interactive/how-to-build-a-distributed-token-based-voting-app-on-ethereum-8be26ba36d10
-**** I Built An Ethereum-based Fully Decentralized Voting System | Hacker Noon
-https://hackernoon.com/i-built-an-ethereum-based-fully-decentralized-voting-system-5x8t34gz
-**** Moving beyond coin voting governance
-https://vitalik.ca/general/2021/08/16/voting3.html
-**** Building Ethereum DApps: Voting with Custom Tokens - SitePoint
-https://www.sitepoint.com/building-ethereum-dapps-voting-custom-tokens/
-**** Towards better Ethereum voting protocols
-https://blog.colony.io/towards-better-ethereum-voting-protocols-7e54cb5a0119/
-**** Aragon One
-https://aragon.one/
-https://wiki.aragon.one/dev/apps/voting/
-https://aragon.one/core
-**** Ghost: Turn your audience into a business
-https://ghost.org/
-**** Liquid Democracy: True Democracy for the 21st Century | by Dominik Schiener | Organizer Sandbox | Medium
-https://medium.com/organizer-sandbox/liquid-democracy-true-democracy-for-the-21st-century-7c66f5e53b6f
-**** Quadratic voting | ERIC POSNER
-http://ericposner.com/quadratic-voting/
-**** An Introduction to Futarchy | Ethereum Foundation Blog
-https://blog.ethereum.org/2014/08/21/introduction-futarchy/
-**** vitalik.eth on Twitter: "I am starting to increasingly like conditional coin lock voting (ie. vote A, A wins -&gt; coins locked for X days) for decentralized governance" / Twitter
-https://twitter.com/vitalikbuterin/status/799503779498524675?lang=en
-**** Towards better Ethereum voting protocols
-https://blog.colony.io/towards-better-ethereum-voting-protocols-7e54cb5a0119/
+**** Intro to Web3.py · Ethereum For Python Developers | Dapp University
+https://www.dappuniversity.com/articles/web3-py-intro
 *** vyper
 **** Learn Vyper in Y Minutes
 https://learnxinyminutes.com/docs/vyper/
@@ -975,11 +983,6 @@ https://medium.com/becoming-future/dynamic-arrays-in-vyper-e58d8d3ad683
 https://github.com/kpeluso/vyper-dynamic-array
 ***** VIP: Dynamic Arrays w/ Sizing · Issue #1440 · vyperlang/vyper
 https://github.com/vyperlang/vyper/issues/1440
-*** TODO tailwind
-**** Tailwind for emacs? : tailwindcss
-https://www.reddit.com/r/tailwindcss/comments/hog992/tailwind_for_emacs/
-**** merrickluo/lsp-tailwindcss: the lsp-mode client for tailwindcss
-https://github.com/merrickluo/lsp-tailwindcss
 *** moralis
 Think "Firebase of crypto"
 https://docs.moralis.io/
@@ -1031,41 +1034,129 @@ https://www.youtube.com/watch?v=pZSegEXtgAE
 https://www.youtube.com/watch?v=upmutq1Vzng
 ***** Program A Python Dapp On Ethereum (Using Flask and Brownie) - Smart Contract Programming - YouTube
 https://www.youtube.com/watch?v=l_4wy7HOUJI
-*** python-development
-**** Intro to Web3.py · Ethereum For Python Developers | Dapp University
-https://www.dappuniversity.com/articles/web3-py-intro
-*** byExample
-**** vyper
-https://vyper.readthedocs.io/en/v0.2.11/vyper-by-example.html#voting
-**** solidity
-https://solidity-by-example.org/
-https://docs.soliditylang.org/en/v0.8.7/solidity-by-example.html
-https://learnxinyminutes.com/docs/solidity/
-*** solidicy
-**** DEPRECATED?? rocky/solc-lsp: LSP functions for solidity using solc's AST
-https://github.com/rocky/solc-lsp
-*** ganache--geth
-**** start ganache
-#+begin_src shell :results drawer
-  ganache-cli --mnemonic "monitor old wheel ask taxi tennis net list distance bright boss kitten"
+** 2  IDEEN
+*** vision
+- transparent voting
+- transparent phrasing
+- transparent creation of phrasings
+- show usage of ethereum testnets
+- smart contract
+**** ideas
+- testdriven
+- scrum
+*** templates
+https://livebook.manning.com/book/building-ethereum-dapps/chapter-12/1
+https://livebook.manning.com/book/building-ethereum-dapps/appendix-d/1
+*** laws
+write
+vote
+apply automatically
+*** learn
+**** remix
+**** ethereum
+***** check then other chains
+**** deploying sm
+***** mainnet
+***** test nets
+***** local
+**** send ether programmatically
+**** change state of sc
+**** inter-sc-communication
+*** smartContracts
+**** ballotCreationContract
+creates a ballot as smartContract
+**** ballot
+- persist result to storage
+- resent ehter to admin
+** 3  FRAGEN
+*** Is a ERC20-token just a smart contract?
+*** mint test token on testnet ???
+all nets??
+https://www.youtube.com/watch?v=0JrDbvBClEA&list=PLVOHzVzbg7bFUaOGwN0NOgkTItUAVyBBQ&index=6
+#+begin_src python :results drawer output
+  dai_addr = "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+  dai = MintableForkToken(dai_addr)
+  dai._mint_for_tetsing(accounts[0], amount)
 #+end_src
-**** attach geth
-#+begin_src shell :results drawer
-  geth attach http://localhost:8545
-#+end_src
-**** on geth-console
-***** create new accont
-#+begin_src js
-  personal.newAccount()
-#+end_src
-*** sc testing
-https://iamdefinitelyahuman.medium.com/
-*** sc
+** 4  RECHERCHE
+*** DeFi
+**** difference strategy
+***** testing??
+***** defi??
+**** yearn
+https://github.com/yearn/brownie-strategy-mix
+https://docs.yearn.finance/yearn-finance/yvaults/vaults-and-strategies
+**** videos
+***** crypto-pools-paper.pdf
+https://curve.fi/files/crypto-pools-paper.pdf
+***** What Is Curve Finance in DeFi? | Binance Academy
+https://academy.binance.com/en/articles/what-is-curve-finance-in-defi
+***** What Is an Automated Market Maker (AMM)? | Binance Academy
+https://academy.binance.com/en/articles/what-is-an-automated-market-maker-amm
+***** A Guide to PancakeSwap | Binance Academy
+https://academy.binance.com/en/articles/a-guide-to-pancakeswap
+***** What is Million and the MM Token? - Ivan on Tech Academy
+https://academy.ivanontech.com/blog/what-is-million-and-the-mm-token
+***** DeFi/NFT projects, like Uniswap, AAVE
 **** AMM
+smart contract
 automated market maker
 DeFi
 https://curve.fi/
+*** voting
+**** votingRights
+https://docs.openzeppelin.com/contracts/2.x/tokens#different-kinds-of-tokens
+**** INFO
+***** How to build a distributed token-based voting app on Ethereum | by Doug Crescenzi | Upstate Interactive | Medium
+https://medium.com/upstate-interactive/how-to-build-a-distributed-token-based-voting-app-on-ethereum-8be26ba36d10
+***** I Built An Ethereum-based Fully Decentralized Voting System | Hacker Noon
+https://hackernoon.com/i-built-an-ethereum-based-fully-decentralized-voting-system-5x8t34gz
+***** Moving beyond coin voting governance
+https://vitalik.ca/general/2021/08/16/voting3.html
+***** Building Ethereum DApps: Voting with Custom Tokens - SitePoint
+https://www.sitepoint.com/building-ethereum-dapps-voting-custom-tokens/
+***** Towards better Ethereum voting protocols
+https://blog.colony.io/towards-better-ethereum-voting-protocols-7e54cb5a0119/
+***** Aragon One
+https://aragon.one/
+https://wiki.aragon.one/dev/apps/voting/
+https://aragon.one/core
+***** Ghost: Turn your audience into a business
+https://ghost.org/
+***** Liquid Democracy: True Democracy for the 21st Century | by Dominik Schiener | Organizer Sandbox | Medium
+https://medium.com/organizer-sandbox/liquid-democracy-true-democracy-for-the-21st-century-7c66f5e53b6f
+***** Quadratic voting | ERIC POSNER
+http://ericposner.com/quadratic-voting/
+***** An Introduction to Futarchy | Ethereum Foundation Blog
+https://blog.ethereum.org/2014/08/21/introduction-futarchy/
+***** vitalik.eth on Twitter: "I am starting to increasingly like conditional coin lock voting (ie. vote A, A wins -&gt; coins locked for X days) for decentralized governance" / Twitter
+https://twitter.com/vitalikbuterin/status/799503779498524675?lang=en
+***** Towards better Ethereum voting protocols
+https://blog.colony.io/towards-better-ethereum-voting-protocols-7e54cb5a0119/
+** 5  BIBLIO~
+*** channels
+**** Austin Griffin - from eth-dev-docs
+https://www.youtube.com/channel/UC_HI2i2peo1A-STdG22GFsA/videos
+*** sites
+https://decrypt.co/
+*** offTopic
+https://www.amazon.com/Age-Living-Machines-Technology-Revolution/dp/0393634744?asin=0393634744&revisionId=&format=4&depth=1
+** 6  I
+*** nix-snippets/commands
+https://toilethill.io/notes/ethereum
 *** ethereum
+**** tutorials
+***** node.js + solidity + deployment to ropsten
+https://rubygarage.org/blog/ethereum-smart-contract-tutorial
+https://github.com/sparrow/smart-contract-tutorial
+***** flask bitcoin blockchain
+https://github.com/satwikkansal/python_blockchain_app
+***** Đapp with integrated Web3 monitoring ??
+https://www.moesif.com/blog/blockchain/ethereum/Tutorial-for-building-Ethereum-Dapp-with-Integrated-Error-Monitoring/
+***** remix ++ additional info
+ http://myhsts.org/tutorial-learn-how-to-work-with-ethereum-blockchain-applications-through-remix-ide.php
+***** golang dapp
+http://myhsts.org/blog/ethereum-dapp-with-evm-remix-golang-truffle-and-solidity-part1.html
 **** langs
 https://ethereum.org/en/developers/docs/programming-languages/
 !!!OLD LINKS - 2018!!!
@@ -1111,44 +1202,25 @@ http://py-eth.com/
 ******* DEPRECATED Everything you need to know about the Trinity Ethereum client | by Piper Merriam | Medium
 https://medium.com/@pipermerriam/everything-you-need-to-know-about-the-trinity-ethereum-client-b093c756d1de
 https://github.com/ethereum/trinity
-*** sphinx
-build documentation
-#+begin_src shell :results drawer
-sphinx-build -b singlehtml  . ./BUILD
-#+end_src
-*** TODO pushNotifications
-**** How to setup basic web push notification functionality using a Flask backend | by Surya Sankar | Medium
-https://suryasankar.medium.com/how-to-setup-basic-web-push-notification-functionality-using-a-flask-backend-1251a5413bbe
-**** Web Push Book
-https://web-push-book.gauntface.com/
-**** Adding Push Notifications to a Web App  |  Web Fundamentals
-https://developers.google.com/web/fundamentals/codelabs/push-notifications/
-**** Web Push Notifications: Timely, Relevant, and Precise
-https://developers.google.com/web/fundamentals/push-notifications
-*** mint test token on testnet ???
-all nets??
-https://www.youtube.com/watch?v=0JrDbvBClEA&list=PLVOHzVzbg7bFUaOGwN0NOgkTItUAVyBBQ&index=6
-#+begin_src python :results drawer output
-  dai_addr = "0x6B175474E89094C44Da98b954EedeAC495271d0F"
-  dai = MintableForkToken(dai_addr)
-  dai._mint_for_tetsing(accounts[0], amount)
-#+end_src
-*** show contract on etherscan
-e.g.: https://etherscan.io/address/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48#code
-** Projektabgabe
-Das Projekt bewerte ich dann innerhalb einer Woche
-sollte mir dann spätestens heute Abend vorliegen:
-als Zip per Mail an cimpython1@gmail.com
-**** eMail
-cimpython1@gmail.com
-** 2  IDEEN
+*** upgrades
+https://ethereum.org/en/history/#london
+*** net,decentralized
+https://blog.ethereum.org/2014/08/18/building-decentralized-web/
+*** [#A] infura, dashboard
+https://infura.io/dashboard/ethereum
+*** RISK
+software is buggy
+what about nonChangeable software
+**** Aavegotchi-Incident
+https://github.com/ethereum/solidity/issues/10616
+https://aavegotchi.com/
+*** ethresearch
+https://ethresear.ch/
 *** Tools/Tech
 **** DONE scrum
 **** testdriven
 **** etherium
 **** flask
-**** etheriumTestNet
-https://docs.openzeppelin.com/learn/connecting-to-public-test-networks#testnet-list
 **** ballot
 remix -> contract -> ballot
 https://remix.ethereum.org/#optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.7+commit.e28d00a7.js
@@ -1166,26 +1238,6 @@ create test-accounts
 ***** web3
 interact with ethereum
 https://web3py.readthedocs.io/en/stable/
-**** nodes
-***** local
-****** [#A] geth                                                     :golang:
-******* DONE installed
-***** hosted
-****** Infura
-***** INFO
-****** size
-******* fullNode
-https://etherscan.io/chartsync/chaindefault
-******** geth
- ~ 1TB
-******** openEthereum
- ~ 0.5TB
-******* archive
-~ 8.5TB
-https://etherscan.io/chartsync/chainarchive
-https://medium.com/@marcandrdumas/are-ethereum-full-nodes-really-full-an-experiment-b77acd086ca7
-******* Bitcoin
-https://ycharts.com/indicators/bitcoin_blockchain_size
 **** grpc
 ***** client
 https://github.com/gusaul/grpcox
@@ -1206,7 +1258,7 @@ https://github.com/oneclickdapp/oneclickdapp-v1
 https://github.com/abunsen/etherflow
 **** smartContract
 ***** solidity
-****** TODO voting
+****** voting
 https://docs.soliditylang.org/en/latest/solidity-by-example.html#voting
 ****** license
 https://spdx.org/licenses/
@@ -1215,159 +1267,84 @@ https://spdx.org/licenses/
 - pure
 ****** DONE emacs
 https://github.com/ralexstokes/vyper-mode
+****** byExample
+https://solidity-by-example.org/
+https://docs.soliditylang.org/en/v0.8.7/solidity-by-example.html
+https://learnxinyminutes.com/docs/solidity/
 ***** vyper
-
 https://vyper.readthedocs.io/
-****** TODO [#A] voting
+****** [#A] voting
 https://vyper.readthedocs.io/en/stable/vyper-by-example.html#voting
-*** templates
-https://livebook.manning.com/book/building-ethereum-dapps/chapter-12/1
-https://livebook.manning.com/book/building-ethereum-dapps/appendix-d/1
-*** laws
-write
-vote
-apply automatically
-*** learn
-**** remix
-**** ethereum
-***** check then other chains
-**** deploying sm
-***** mainnet
-***** test nets
-***** local
-**** send ether programmatically
-**** change state of sc
-**** inter-sc-communication
-** 3  FRAGEN
-*** Is a ERC20-token just a smart contract?
-** 4  RECHERCHE
-*** deFi
-**** crypto-pools-paper.pdf
-https://curve.fi/files/crypto-pools-paper.pdf
-**** What Is Curve Finance in DeFi? | Binance Academy
-https://academy.binance.com/en/articles/what-is-curve-finance-in-defi
-**** What Is an Automated Market Maker (AMM)? | Binance Academy
-https://academy.binance.com/en/articles/what-is-an-automated-market-maker-amm
-**** A Guide to PancakeSwap | Binance Academy
-https://academy.binance.com/en/articles/a-guide-to-pancakeswap
-**** What is Million and the MM Token? - Ivan on Tech Academy
-https://academy.ivanontech.com/blog/what-is-million-and-the-mm-token
-**** DeFi/NFT projects, like Uniswap, AAVE
-** 5  BIBLIO~
-*** channels
-**** Austin Griffin - from eth-dev-docs
-https://www.youtube.com/channel/UC_HI2i2peo1A-STdG22GFsA/videos
-*** sites
-https://decrypt.co/
-*** offTopic
-https://www.amazon.com/Age-Living-Machines-Technology-Revolution/dp/0393634744?asin=0393634744&revisionId=&format=4&depth=1
-** 6  I
-*** VISION
-**** ALTS
-***** futarchy
-http://mason.gmu.edu/~rhanson/futarchy.html
-*** snippets commands nix
-*** ethereum
-**** tutorials
-***** node.js + solidity + deployment to ropsten
-https://rubygarage.org/blog/ethereum-smart-contract-tutorial
-https://github.com/sparrow/smart-contract-tutorial
-***** flask bitcoin blockchain
-https://github.com/satwikkansal/python_blockchain_app
-***** Đapp with integrated Web3 monitoring ??
-https://www.moesif.com/blog/blockchain/ethereum/Tutorial-for-building-Ethereum-Dapp-with-Integrated-Error-Monitoring/
-***** remix ++ additional info
- http://myhsts.org/tutorial-learn-how-to-work-with-ethereum-blockchain-applications-through-remix-ide.php
-***** golang dapp
-http://myhsts.org/blog/ethereum-dapp-with-evm-remix-golang-truffle-and-solidity-part1.html
-**** smartContracts
-***** Diamonds
-is a way to organize your Solidity code
-https://dev.to/mudgen/understanding-diamonds-on-ethereum-1fb
-https://github.com/ethereum/EIPs/blob/master/EIPS/eip-2535.md
-*** currency
-https://ethdocs.org/en/latest/ether.html#denominations
-**** wei
-https://en.wikipedia.org/wiki/Wei_Dai
-https://www.investopedia.com/terms/b/bmoney.asp
-*** gas
-is a computational unit (quantity)
-has to be multiplied with gasPrice (in gwei) to get a bill
-**** calculation + example
-https://ethereum.org/en/developers/docs/transactions/#on-gas
-***** ~baseFeePerGas~
-will be burned
-***** ~maxPriorityFeePerGas~
-will be transfered to miner
-***** ~from~ will have to pay
-**** tracker
-https://etherscan.io/gastracker
-*** upgrades
-https://ethereum.org/en/history/#london
-*** net,decentralized
-https://blog.ethereum.org/2014/08/18/building-decentralized-web/
-*** [#A] infura, dashboard
-https://infura.io/dashboard/ethereum
-*** RISK
-software is buggy
-what about nonChangeable software
-**** Aavegotchi-Incident
-https://github.com/ethereum/solidity/issues/10616
-https://aavegotchi.com/
-*** ethresearch
-https://ethresear.ch/
+****** byExample
+https://vyper.readthedocs.io/en/v0.2.11/vyper-by-example.html#voting
+*** Projektabgabe
+Das Projekt bewerte ich dann innerhalb einer Woche
+sollte mir dann spätestens heute Abend vorliegen:
+als Zip per Mail an cimpython1@gmail.com
+***** eMail
+cimpython1@gmail.com
+*** pushNotifications
+**** How to setup basic web push notification functionality using a Flask backend | by Surya Sankar | Medium
+https://suryasankar.medium.com/how-to-setup-basic-web-push-notification-functionality-using-a-flask-backend-1251a5413bbe
+**** Web Push Book
+https://web-push-book.gauntface.com/
+**** Adding Push Notifications to a Web App  |  Web Fundamentals
+https://developers.google.com/web/fundamentals/codelabs/push-notifications/
+**** Web Push Notifications: Timely, Relevant, and Precise
+https://developers.google.com/web/fundamentals/push-notifications
+*** python
+**** sphinx
+build documentation
+#+begin_src shell :results drawer
+sphinx-build -b singlehtml  . ./BUILD
+#+end_src
 ** 7  ToDO
 *** tutorial
 **** [#A] a-developers-guide-to-ethereum-part-one
 https://ethereum.org/en/developers/tutorials/a-developers-guide-to-ethereum-part-one/
-*** nix-snippets/commands
-https://toilethill.io/notes/ethereum
-*** Keynote
-<2021-10-04 Mon>
 *** TODO sc
 **** Design & BestPractices
 Um notwendige Fehlerbehebungen und Erweiterungen durchzuführen oder nicht mehr benötigte Smart Contracts unerreichbar zu machen,
 gibt es eine Reihe von Best Practices und Design Patterns.
 Es ist empfehlenswert sich mit ihnen vertraut zu machen,
 bevor man mit der Entwicklung von Smart Contracts beginnt.
-*** Đapp
-In einer vollständig dezentralen Umsetzung gemäß der Vision von Web 3.0 wäre auch das Frontend eines ĐApps dezentral gehosted.
-Dafür bieten sich dezentrale Speicherdienste wie IPFS oder Swarm an.
-Letzteres gehört neben der Ethereum Virtual Machine (EVM) und Whisper zu den drei Grundbausteinen von Ethereum.
 *** TODO golang
 https://goethereumbook.org/en/accounts/
 *** TODO ganacheUI
-*** TODO try to install vyper with poetry
-apply
-https://github.com/NixOS/nixpkgs/blob/nixos-21.05/pkgs/development/compilers/vyper/default.nix#L49
-as overlay
-cf. https://github.com/nix-community/poetry2nix/blob/master/overrides.nix
 *** TODO [#A] testing
 **** TODO Hypothesis
 https://hypothesis.works/articles/what-is-hypothesis/
 ***** property-based testing
 https://eth-brownie.readthedocs.io/en/stable/tests-hypothesis-property.html
-*** DeFi
-**** difference strategy
-***** testing??
-***** defi??
-**** yearn
-https://github.com/yearn/brownie-strategy-mix
-https://docs.yearn.finance/yearn-finance/yvaults/vaults-and-strategies
-*** cleanup
+*** import
 #+begin_src python :results drawer output
-# from dirdem.config import *
-# import dirdem.config.conf as conf
-# import dirdem.config
+  # from dirdem.config import *
+  # import dirdem.config.conf as conf
+  # import dirdem.config
 #+end_src
 *** ranger
-**** highlight sol files
+**** highlight ~sol~ and ~vy~ files
+*** emacs
+**** solidicy
+***** DEPRECATED?? rocky/solc-lsp: LSP functions for solidity using solc's AST
+https://github.com/rocky/solc-lsp
+**** TODO tailwind
+***** Tailwind for emacs? : tailwindcss
+https://www.reddit.com/r/tailwindcss/comments/hog992/tailwind_for_emacs/
+***** merrickluo/lsp-tailwindcss: the lsp-mode client for tailwindcss
+https://github.com/merrickluo/lsp-tailwindcss
 ** 7a Anschaffungen
 ** 8  INSTALLATIONEN
 ** 9  ROUTINEN
 ** 10 ERKENNTNISSE
 ** 11 ERLEDIGTES
-*** KW NN
+*** DONE try to install vyper with poetry
+apply
+https://github.com/NixOS/nixpkgs/blob/nixos-21.05/pkgs/development/compilers/vyper/default.nix#L49
+as overlay
+cf. https://github.com/nix-community/poetry2nix/blob/master/overrides.nix
+*** Keynote
+<2021-10-04 Mon>
 * TimeTable
 #+BEGIN: clocktable :scope file :maxlevel 5
 #+CAPTION: Clock summary at [2018-08-26 Sun 23:34]

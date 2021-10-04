@@ -1,8 +1,73 @@
 * dirĐem
 ** INFO
 *** SOURCES
-**** flask is based on
+**** flask is roughly based on
 https://github.com/testdrivenio/flask-htmx-tailwind
+**** smartcontract folder structure is based on brownie chainlink-mix
+https://github.com/smartcontractkit/chainlink-mix
+** RUNNING
+*** dependencies
+**** on nixos
+everything will be loaded automatically via ~direnv~ on entering the project-directory
+**** other os
+***** all =package.json=-packages
+#+begin_src shell :results drawer
+npm install
+#+end_src
+***** all =pyproject.toml=-packages
+#+begin_src shell :results drawer
+poetry lock
+#+end_src
+*** DEVEL
+**** start local chain FIRST!
+***** OR
+****** with summon
+#+begin_src shell :results drawer
+  cd ./smartcontract/
+  summon -e dev --up brownie console
+#+end_src
+****** w/o summon
+all envs in =./secrets.yml=:dev  have to be set manually
+#+begin_src shell :results drawer
+  cd ./smartcontract/
+  brownie console
+#+end_src
+**** start local flask
+****** with summon
+#+begin_src shell :results drawer
+summon -e dev --up flask run --host='::' --port=8080
+#+end_src
+****** w/o summon
+all envs in =./secrets.yml=:dev  have to be set manually
+#+begin_src shell :results drawer
+  flask run --host='::' --port=8080
+#+end_src
+*** PRODUCTION (kovan-testnet)
+**** optional
+flask will use a  web3-provider to access kovan via infura
+***** OR
+****** with summon
+#+begin_src shell :results drawer
+  cd ./smartcontract/
+  summon -e dev --up brownie console --network ${BROWNIE_NETWORK}
+#+end_src
+~networks~ are defined in =smartcontract/brownie-config.yaml=
+****** w/o summon
+all envs in =./secrets.yml=:dev  have to be set manually
+#+begin_src shell :results drawer
+  cd ./smartcontract/
+  brownie console --network kovan
+#+end_src
+**** start flask (connecting to kovan)
+****** with summon
+#+begin_src shell :results drawer
+summon -e prod --up flask run --host='::' --port=8080
+#+end_src
+****** w/o summon
+all envs in =./secrets.yml=:prod  have to be set manually
+#+begin_src shell :results drawer
+  flask run --host='::' --port=8080
+#+end_src
 ** SETUP
 add files needed for flask
 add node-packages from package.lock
@@ -108,5 +173,3 @@ searches the project-root to find the executable and tests
 #+begin_src shell :results drawer
 npm install --package-lock-only --no-package-lock @tailwindcss/custom-forms --save-dev
 #+end_src
-
-
