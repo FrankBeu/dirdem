@@ -73,7 +73,7 @@ add files needed for flask
 add node-packages from package.lock
 #+begin_src shell :results drawer
 nixify
-node2nix -l
+node2nix --development
 #+end_src
 ** get ip
 #+begin_src shell :results drawer
@@ -173,3 +173,11 @@ searches the project-root to find the executable and tests
 #+begin_src shell :results drawer
 npm install --package-lock-only --no-package-lock @tailwindcss/custom-forms --save-dev
 #+end_src
+*** node2nix
+**** dev-packages
+***** by default only nonDevPackages will be made available
+***** make devPackages available, too
+#+begin_src shell :results drawer
+node2nix --development
+#+end_src
+
