@@ -1,11 +1,8 @@
 from dirdem import app
 
-from flask import Flask, render_template, request, redirect, url_for, Response, request, jsonify
+from flask import Flask, render_template, request, redirect, url_for, request
 from flask_assets import Bundle, Environment
-# from dirdem.utils.smartcontract import w3, deploy_ballot
-# from marshmallow import Schema, fields, ValidationError
 
-from dirdem.config.dummy import todos
 from dirdem.config.conf import load_setting
 from dirdem.dummy.dummy import load_data
 # from dirdem.config import *
@@ -17,8 +14,8 @@ import random
 import json
 import logging
 import datetime
-import time
 import web3
+
 ### CONFIGURATION
 app.config.update(load_setting())
 
@@ -107,7 +104,6 @@ def get_ballot_data(ballot_address_list):
         )
 
         ballot_data = ballot.functions.state().call()
-
         ballot_data_list.append(ballot_data)
 
     return ballot_data_list
@@ -134,6 +130,58 @@ def prepare_ballots_data(ballots_data_raw):
     return ballots_data
 
 
+def create_ballot_smartcontract(title, question, dateTimeClosing):
+    timelimit = int(dateTimeClosing) * 60
+
+    ballot_address = deploy_ballot(title, question, timelimit)
+
+    add_ballot_to_ballotList(ballot_address)
+    print(ballot_address)
+
+    return ballot_address
+
+
+def deploy_ballot(title, question, timelimit):
+    with open('./smartcontract/build/contracts/Ballot.json', 'r') as f:
+        contract_interface = json.load(f)
+
+    ### Instantiate and deploy contract
+    Ballot = w3.eth.contract(
+        abi=contract_interface["abi"], bytecode=contract_interface["bytecode"]
+    )
+    ### Get transaction hash from deployed contract
+    tx_hash = Ballot.constructor(title, question, timelimit).transact()
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+
+
+    # ballot = w3.eth.contract(
+    #     abi=contract_interface["abi"], address=tx_receipt['contractAddress']
+    #     )
+
+    address = tx_receipt["contractAddress"]
+    print(address)
+
+    return address
+
+
+
+def add_ballot_to_ballotList(ballot_address):
+    with open('./smartcontract/build/contracts/BallotList.json', 'r') as f:
+        datastore = json.load(f)
+    abi = datastore["abi"]
+    # contract_address = datastore["contract_address"]
+    contract_address = app.config['BALLOT_LIST_ADDRESS']
+
+    ### Create the contract instance with the newly-deployed address
+    ballotList = w3.eth.contract(
+        address=contract_address,
+        abi=abi,
+    )
+
+    tx_hash = ballotList.functions.add_ballot(ballot_address).transact()
+    w3.eth.wait_for_transaction_receipt(tx_hash)
+
+
 def vote_on_ballot(address, vote, id):
 
     print(address, vote, id)
@@ -152,7 +200,6 @@ def vote_on_ballot(address, vote, id):
 
     tx_hash = ballot.functions.vote(id, vote).transact()
     w3.eth.waitForTransactionReceipt(tx_hash)
-    # tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
 
 
 ### ROUTES
@@ -212,19 +259,9 @@ def create_ballot():
 
 @app.route("/ballots", methods=["POST"])
 def store_ballot():
-    # return redirect("/ballots/123", code=200)
-    # title
-    # question
-    # dateTimeClosing
-    # print(request.get_data('title'))
-    ballot_id = create_ballot_smartcontract(request.form['title'], request.form['question'], request.form['dateTimeClosing'])
-    # print(request.form['title'])
-    # print(request.form['question'])
-    print(ballot_id)
-    # print(request.form['dateTimeClosing'])
-    # data = request.get_data()
-    # id = 124
-    return redirect(url_for('show_ballot', id=ballot_id))
+    ballot_address = create_ballot_smartcontract(request.form['title'], request.form['question'], request.form['dateTimeClosing'])
+
+    return redirect(url_for('show_ballot', id=ballot_address))
 
 
 @app.route("/ballots/<id>")
@@ -244,7 +281,6 @@ def show_ballot(id):
         ballot['resultPositive']  = dummy['ballot']['ballots'][r]['resultPositive']
         ballot['resultNegative']  = dummy['ballot']['ballots'][r]['resultNegative']
         ballot['closed']          = dummy['ballot']['ballots'][r]['closed']
-        # print(ballot['addressLink'])
     else:
         ballot = {}
         ballots_data_raw = get_ballot_data([id])
@@ -301,6 +337,7 @@ def store_vote():
     vote_on_ballot(ballot_address, vote, request.form['identification'])
 
     return redirect(url_for('show_ballot', id=ballot_address))
+
 
 
 
