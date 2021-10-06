@@ -3,15 +3,14 @@ from dirdem import app
 from flask import render_template, request, redirect, url_for, request
 from flask_assets import Bundle, Environment
 
-from dirdem.config.conf import load_setting
-from dirdem.dummy.dummy import load_data
-
 import os
 import random
 import json
 import datetime
 import web3
 
+import dirdem.config.conf as config
+import dirdem.dummy.dummy as dummy
 
 ### ASSETS
 assets = Environment(app)
@@ -27,7 +26,7 @@ APP_TITLE = 'dirĐem'
 message_global   = ''
 
 ### CONFIGURATION
-app.config.update(load_setting())
+app.config.update(config.load_setting())
 web3_provider = app.config['WEB3_PROVIDER']
 if 'infura' in web3_provider:
     web3_provider += os.getenv('WEB3_INFURA_PROJECT_ID')
@@ -42,7 +41,7 @@ else:
 
 
 ### dummy data for development
-dummy = {}
+fake_dummy = {}
 
 def is_dummy() -> bool:
     # if (app.config['ENV'] == 'fake') or (app.config['ENV'] == 'dev'):
@@ -50,8 +49,8 @@ def is_dummy() -> bool:
         ### TODO only dev has hotreload
         # if (app.config['ENV'] == 'fake'):
         ### otherwise hot reload is useless
-        global dummy
-        dummy = load_data()
+        global fake_dummy
+        fake_dummy = dummy.load_data()
         return True
 
     return False
@@ -229,7 +228,7 @@ def index_ballots():
     if is_dummy():
 
         url_prefix = etherscan_url_prefix()
-        dummies = dummy['ballot']['ballots']
+        dummies = fake_dummy['ballot']['ballots']
 
         for fake in dummies:
             ballot = {}
@@ -303,15 +302,15 @@ def show_ballot(id):
         url_prefix = etherscan_url_prefix()
 
         ballot = {}
-        ballot['id']              = dummy['ballot']['ballots'][r]['id']
-        ballot['address']         = dummy['ballot']['ballots'][r]['address']
-        ballot['addressLink']     = url_prefix + dummy['ballot']['ballots'][r]['address']
-        ballot['title']           = dummy['ballot']['ballots'][r]['title']
-        ballot['question']        = dummy['ballot']['ballots'][r]['question']
-        ballot['dateTimeClosing'] = dummy['ballot']['ballots'][r]['dateTimeClosing']
-        ballot['resultPositive']  = dummy['ballot']['ballots'][r]['resultPositive']
-        ballot['resultNegative']  = dummy['ballot']['ballots'][r]['resultNegative']
-        ballot['closed']          = dummy['ballot']['ballots'][r]['closed']
+        ballot['id']              = fake_dummy['ballot']['ballots'][r]['id']
+        ballot['address']         = fake_dummy['ballot']['ballots'][r]['address']
+        ballot['addressLink']     = url_prefix + fake_dummy['ballot']['ballots'][r]['address']
+        ballot['title']           = fake_dummy['ballot']['ballots'][r]['title']
+        ballot['question']        = fake_dummy['ballot']['ballots'][r]['question']
+        ballot['dateTimeClosing'] = fake_dummy['ballot']['ballots'][r]['dateTimeClosing']
+        ballot['resultPositive']  = fake_dummy['ballot']['ballots'][r]['resultPositive']
+        ballot['resultNegative']  = fake_dummy['ballot']['ballots'][r]['resultNegative']
+        ballot['closed']          = fake_dummy['ballot']['ballots'][r]['closed']
     else:
         ballot = {}
         ballots_data_raw = get_ballot_data([id])

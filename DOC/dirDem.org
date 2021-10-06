@@ -848,6 +848,8 @@ https://eips.ethereum.org/EIPS/eip-20
 *****  totalSupply = tokensIActuallyWant * (10 ** decimals)
 **** EIP-721: Non Fungible Tokens
 https://eips.ethereum.org/EIPS/eip-721
+*** packageManager
+https://eth-brownie.readthedocs.io/en/stable/ethpm.html#ethpm
 ** Đapps
 apps built on a decentralized network combining a
 - smart contract and a
@@ -921,6 +923,8 @@ https://emn178.github.io/online-tools/keccak_256.html
 **** brownie                                                      :python:
 https://readthedocs.org/projects/eth-brownie/downloads/pdf/v1.3.1_a/
 https://github.com/eth-brownie/brownie
+***** mix
+https://github.com/orgs/brownie-mix/repositories
 **** truffle                                                          :js:
 https://www.trufflesuite.com
 **** DEPRECATED perigord                                          :golang:
@@ -1133,6 +1137,9 @@ https://blog.ethereum.org/2014/08/21/introduction-futarchy/
 https://twitter.com/vitalikbuterin/status/799503779498524675?lang=en
 ***** Towards better Ethereum voting protocols
 https://blog.colony.io/towards-better-ethereum-voting-protocols-7e54cb5a0119/
+*** NFT
+**** cryptopunkts
+https://www.larvalabs.com/cryptopunks
 ** 5  BIBLIO~
 *** channels
 **** Austin Griffin - from eth-dev-docs
